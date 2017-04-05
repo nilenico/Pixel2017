@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/Crew/alex.unity
+- path: Assets/Scenes/Crew/font10.unity
   isLoaded: 1
   isActive: 1
