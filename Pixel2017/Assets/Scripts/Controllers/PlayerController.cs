@@ -14,9 +14,13 @@ public class PlayerController : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        velocity = Vector3.zero;
-        velocity.x += InputManager.Devices[this.pid].LeftStickX.Value;
-        velocity.y += InputManager.Devices[this.pid].LeftStickY.Value;
-        transform.position += velocity * speed * Time.deltaTime; ;
+        if(InputManager.Devices.Count > 0)
+        {
+            velocity = Vector3.zero;
+            velocity.x += InputManager.Devices[pid].LeftStickX.Value;
+            velocity.y += InputManager.Devices[pid].LeftStickY.Value;
+            transform.position += velocity * speed * Time.deltaTime;
+        }
+
     }
 }
