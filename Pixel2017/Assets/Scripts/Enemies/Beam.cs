@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Beam : MonoBehaviour
 {
+    public Player playerScript;
     public Vector3 beam_scale;
     private CircleCollider2D cirleCollider;
     private bool freezePlayer;
@@ -38,6 +39,9 @@ public class Beam : MonoBehaviour
     private void stun(){
         if (freezePlayer && playerHit != null) {
             if (freezeTimeout > 0){
+
+                playerScript = playerHit.GetComponent<Player>();
+                playerScript.gotShocked = true;
                 playerHit.transform.position = freezePosition;
                 freezeTimeout--;
             }
