@@ -1,4 +1,0 @@
-sceneSetups:
-- path: Assets/Scenes/Crew/Font10.unity
-  isLoaded: 1
-  isActive: 1
