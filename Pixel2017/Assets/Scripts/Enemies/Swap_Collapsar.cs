@@ -12,7 +12,7 @@ public class Swap_Collapsar : MonoBehaviour
     private Transform startFrom;
     private GameObject otherPlayerToSwap;
     private Player attracked_player;
-    private Player[] players = new Player[2];
+    private Player[] players = new Player[4];
 
     // Use this for initialization
     void Start()
@@ -29,8 +29,10 @@ public class Swap_Collapsar : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D coll){
-        attractObj = coll.gameObject;
-        attracked_player = coll.gameObject.GetComponent<Player>();
+        if (coll.gameObject.tag.Equals("Player")){
+            attractObj = coll.gameObject;
+            attracked_player = coll.gameObject.GetComponent<Player>();
+        }
     }
 
     private void checkCollision() {
@@ -39,7 +41,7 @@ public class Swap_Collapsar : MonoBehaviour
         }
         else if ((attractObj != null && Vector3.Distance(transform.position, attractObj.transform.position) <= distance)){
             for (int i = 0; i < players.Length; ++i){
-                if (players[i].gameObject.name != attractObj.gameObject.name){
+                if (players[i] != null && players[i].gameObject.name != attractObj.gameObject.name){
                     startFrom = transform;
                     otherPlayerToSwap = players[i].gameObject;
                     target = otherPlayerToSwap.transform;
