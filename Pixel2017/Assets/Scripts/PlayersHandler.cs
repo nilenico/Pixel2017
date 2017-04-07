@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEngine.UI;
 using UnityEngine;
 using InControl;
 
@@ -7,8 +6,9 @@ public class PlayersHandler : MonoBehaviour {
     private GameObject[] vPlayers;
     private int count;
     public GameObject timer;
-
+    public Image lblWin;
     void Start () {
+        lblWin.enabled = false;
         PlayerController.OnRemovePlayer += removePlayer;
         vPlayers = GameObject.FindGameObjectsWithTag("Player");
         for(int i = 0; i < InputManager.Devices.Count; ++i ) {
@@ -30,6 +30,7 @@ public class PlayersHandler : MonoBehaviour {
         }
     }
     void win() {
+        lblWin.enabled = true;
         timer.GetComponent<Timer>().Stop();
     }
 }

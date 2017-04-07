@@ -44,7 +44,6 @@ public class Beam : MonoBehaviour
                 playerScript = playerHit.GetComponent<Player>();
                 playerScript.gotShocked = true;
                 playerHit.transform.position = freezePosition;
-                //tempSpeed = playerHit.GetComponent<Player>().speed;
                 freezeTimeout--;
             }
             else {

@@ -14,6 +14,7 @@ public class WarpSpeed : MonoBehaviour {
 		particles = GetComponent<ParticleSystem>();
         rend = particles.GetComponent<ParticleSystemRenderer>();
         main = particles.main;
+        StartCoroutine(waitStartWarp());
     }
 
 	void Update()
@@ -28,16 +29,16 @@ public class WarpSpeed : MonoBehaviour {
 			rend.velocityScale -= WarpDistortion * (Time.deltaTime * Speed);
 		}
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Engage();
-            main.simulationSpeed = 1.0f;
-        }
-        else if (Input.GetKeyUp(KeyCode.Space))
-        {
-            Disengage();
-            main.simulationSpeed = 0.25f;
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    Engage();
+        //    main.simulationSpeed = 1.0f;
+        //}
+        //else if (Input.GetKeyUp(KeyCode.Space))
+        //{
+        //    Disengage();
+        //    main.simulationSpeed = 0.25f;
+        //}
 	}
 
 	public void Engage(){
@@ -55,4 +56,10 @@ public class WarpSpeed : MonoBehaviour {
 	bool atNormalSpeed(){
 		return rend.velocityScale > 0;
 	}
+
+    IEnumerator waitStartWarp()
+    {
+        yield return new WaitForSeconds(88.0f);
+        Engage();
+    }
 }

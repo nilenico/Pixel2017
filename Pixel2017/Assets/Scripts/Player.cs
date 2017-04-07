@@ -15,6 +15,7 @@ public class Player : PlayerController
     public bool isShocked = false;
     private float startTime;
     private float shockedTime = 2.0f;
+    private float startSpeed;
 
     void Start()
     {
@@ -29,6 +30,9 @@ public class Player : PlayerController
         }
         startTime = Time.time;
         this.OnDie += performDie;
+
+        startSpeed = speed;
+       
     }
         
     void performDie() {
@@ -68,7 +72,7 @@ public class Player : PlayerController
                     isShocked = false;
                     gotShocked = false;
                     animator.SetBool("isElectro", false);
-                    speed = 2.5f;
+                    speed = startSpeed;
                 }
             }
         }
@@ -76,15 +80,18 @@ public class Player : PlayerController
 
     void SetRotation()
     {
-        if (InputManager.Devices[pid].LeftStickX.Value < -0.2 ||
-            InputManager.Devices[pid].LeftStickX.Value > 0.2 ||
-            InputManager.Devices[pid].LeftStickY.Value < -0.2 ||
-            InputManager.Devices[pid].LeftStickY.Value > 0.2)
+        if(InputManager.Devices.Count >0)
         {
-            float angle = Mathf.Atan2(InputManager.Devices[pid].LeftStickX.Value, InputManager.Devices[pid].LeftStickY.Value);
-            float degree = angle * Mathf.Rad2Deg;
-            Quaternion eulerRot = Quaternion.Euler(0.0f, 0.0f, -degree);
-            transform.rotation = Quaternion.Slerp(transform.rotation, eulerRot, Time.deltaTime * 10);
+            if (InputManager.Devices[pid].LeftStickX.Value < -0.2 ||
+                InputManager.Devices[pid].LeftStickX.Value > 0.2 ||
+                InputManager.Devices[pid].LeftStickY.Value < -0.2 ||
+                InputManager.Devices[pid].LeftStickY.Value > 0.2)
+            {
+                float angle = Mathf.Atan2(InputManager.Devices[pid].LeftStickX.Value, InputManager.Devices[pid].LeftStickY.Value);
+                float degree = angle * Mathf.Rad2Deg;
+                Quaternion eulerRot = Quaternion.Euler(0.0f, 0.0f, -degree);
+                transform.rotation = Quaternion.Slerp(transform.rotation, eulerRot, Time.deltaTime * 10);
+            }
         }
     }
 
