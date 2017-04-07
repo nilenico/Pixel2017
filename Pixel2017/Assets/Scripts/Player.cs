@@ -7,11 +7,8 @@ public class Player : MonoBehaviour
 {
 
     List<Item> items;
+    public float speed;
 
-
-    void Start()
-    {
-        int i = InputManager.Devices.Count;
+    void Start() {
     }
-
 }
