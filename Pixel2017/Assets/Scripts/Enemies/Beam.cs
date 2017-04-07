@@ -11,6 +11,7 @@ public class Beam : MonoBehaviour
     private GameObject playerHit;
     private Vector3 freezePosition;
     private float freezeTimeout = 100;
+    private float tempSpeed = 2.5f;
 
 
     // Use this for initialization
@@ -33,22 +34,24 @@ public class Beam : MonoBehaviour
             freezePlayer = true;
             playerHit = coll.gameObject;
             freezePosition = coll.transform.position;
+            playerHit.GetComponent<Player>().speed = 0;
         }
     }
 
     private void stun(){
         if (freezePlayer && playerHit != null) {
             if (freezeTimeout > 0){
-
                 playerScript = playerHit.GetComponent<Player>();
                 playerScript.gotShocked = true;
                 playerHit.transform.position = freezePosition;
+                //tempSpeed = playerHit.GetComponent<Player>().speed;
                 freezeTimeout--;
             }
             else {
                 freezeTimeout = 100;
-                playerHit = null;
                 freezePosition = Vector3.zero;
+                playerHit.GetComponent<Player>().speed = tempSpeed;
+                playerHit = null;
             }
         }
     }
