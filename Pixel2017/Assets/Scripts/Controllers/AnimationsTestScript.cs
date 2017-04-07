@@ -12,7 +12,7 @@ public class AnimationsTestScript : MonoBehaviour
     public bool gotShocked = false;
     private bool isShocked = false;
 
-    private float shockTime = 3.0f;
+    private float shockTime = 2.0f;
     private float startTime;
 
 
