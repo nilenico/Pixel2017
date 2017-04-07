@@ -6,7 +6,7 @@ public class enemyAsteroid : MonoBehaviour {
 
     private float movementSpeed = 5.0f;
     private float rotateSpeed = 100.0f;
-    private float lifeTime = 10.0f;
+    private float lifeTime = 20.0f;
 
     private Vector3 normalizedDirection;
 
