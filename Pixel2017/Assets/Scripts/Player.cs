@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using InControl;
+using System;
 
 public class Player : PlayerController
 {
@@ -19,15 +21,18 @@ public class Player : PlayerController
         {
             SetAnimators();
         }
+        SetRotation();
 
 
         if (Input.GetKeyDown(KeyCode.S))
         {
+            transform.rotation = new Quaternion(0, 0, -90, 0);
             animator.SetBool("isClose", true);
             animator.SetBool("isPushing", false);
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
+            transform.rotation = new Quaternion(0, 0, 90, 0);
             animator.SetBool("isClose", false);
             animator.SetBool("isPushing", true);
         }
@@ -37,6 +42,27 @@ public class Player : PlayerController
             animator.SetBool("isPushing", false);
         }
     }
+
+    void SetRotation()
+    {
+        if(InputManager.Devices[pid].LeftStickX.Value > 0.2)
+        {
+            transform.eulerAngles = new Vector3(0, 0, -90);
+        }
+        else if (InputManager.Devices[pid].LeftStickX.Value < -0.2)
+        {
+            transform.eulerAngles = new Vector3(0, 0, 90);
+        }
+        else if (InputManager.Devices[pid].LeftStickY.Value > 0.2)
+        {
+            transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+        else if (InputManager.Devices[pid].LeftStickY.Value < -0.2)
+        {
+            transform.eulerAngles = new Vector3(0, 0, 180);
+        }
+    }
+
 
     void SetAnimators()
     {
