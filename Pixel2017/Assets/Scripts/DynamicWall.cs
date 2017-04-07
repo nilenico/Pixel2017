@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class DynamicWall : MonoBehaviour {
+    public float resistance;
 
-    List<Item> items;
 }
