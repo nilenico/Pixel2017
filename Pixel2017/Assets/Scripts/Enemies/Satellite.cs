@@ -7,8 +7,8 @@ public class Satellite : MonoBehaviour {
     public float MoveSpeed;
     public GameObject beam_go;
 
-    private float frequency;  // Speed of sine movement
-    private float magnitude;   // Size of sine movement
+    public float frequency;  // Speed of sine movement
+    public float magnitude;   // Size of sine movement
     private Vector3 axis;
     Vector3 pos;
     private int beamTimeout;
@@ -20,9 +20,6 @@ public class Satellite : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        frequency = 4.0f;
-        magnitude = 4.0f;
-
         pos = transform.position;
         axis = transform.right;  // May or may not be the axis you want
         beamTimeout = initial_time_beam;
@@ -44,16 +41,15 @@ public class Satellite : MonoBehaviour {
 
     private void move() {
         pos += normalizedDirection * MoveSpeed * Time.deltaTime;
-        Vector3 axis = new Vector3(normalizedDirection.x, normalizedDirection.y);
+        Vector3 axis = new Vector3(-normalizedDirection.x, normalizedDirection.y);
         transform.position = pos + axis * Mathf.Sin(Time.time * frequency) * magnitude;
     }
 
     private void releaseBeam(GameObject beam) {
-        Instantiate(beam, transform.position, Quaternion.identity);
+        (Instantiate(beam, transform.position, Quaternion.identity) as GameObject).transform.parent = this.transform;
     }
 
-    void onRotate()
-    {
+    void onRotate(){
         transform.Rotate(0, 0, Time.deltaTime * rotateSpeed);
     }
 

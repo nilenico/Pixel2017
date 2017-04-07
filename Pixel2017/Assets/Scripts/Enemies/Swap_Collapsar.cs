@@ -30,7 +30,7 @@ public class Swap_Collapsar : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D coll){
         if (coll.gameObject.tag.Equals("Player")){
-            attractObj = coll.gameObject;
+            attractObj = (coll.gameObject);
             attracked_player = coll.gameObject.GetComponent<Player>();
         }
     }
