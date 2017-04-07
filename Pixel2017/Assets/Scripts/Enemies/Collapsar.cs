@@ -11,9 +11,12 @@ public class Collapsar : MonoBehaviour {
     public float distance;
     public bool swap_state;
     private Transform target;
+    private int timeout;
+    public int initial_timeout;
 
     // Use this for initialization
     void Start () {
+        timeout = initial_timeout;
     }
 	
 	// Update is called once per frame
@@ -26,9 +29,15 @@ public class Collapsar : MonoBehaviour {
                 attractObj.transform.position = target.position;
             }
         }
+
+        if (timeout >0) { timeout--; }
+        else { Destroy(this.gameObject); }
+        
 	}
 
     private void OnTriggerEnter2D(Collider2D coll) {
-        attractObj = coll.gameObject;
+        if (coll.tag.Equals("Player")){
+            attractObj = coll.gameObject;
+        }
     }
 }
