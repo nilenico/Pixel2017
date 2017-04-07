@@ -1,4 +1,0 @@
-sceneSetups:
-- path: Assets/Scenes/Crew/alex.unity
-  isLoaded: 1
-  isActive: 1
