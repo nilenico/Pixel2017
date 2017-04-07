@@ -7,12 +7,25 @@ using System;
 public class Player : PlayerController
 {
     private Animator animator;
+    private SpriteRenderer shockwaveSprite;
     
     private bool animationIsSet = false;
+    public bool isShocked = false;
+    private float startTime;
+    private float shockedTime = 3.0f;
+
 
     void Start()
     {
         animator = GetComponent<Animator>();
+        foreach (Transform child in transform)
+        {
+            if (child.gameObject.tag == "playerShockwave")
+            {
+                shockwaveSprite = child.GetComponent<SpriteRenderer>();
+            }
+        }
+        startTime = Time.time;
     }
 
     void Update()
@@ -27,9 +40,22 @@ public class Player : PlayerController
 
     void Actions()
     {
-        SetRotation();
-        CheckForPush();
-        CollectItem();
+        if(!isShocked)
+        {
+            SetRotation();
+            CheckForPush();
+            CollectItem();
+        }
+        else
+        {
+            CheckForPush();
+            if ((startTime + shockedTime) <= Time.time)
+            {
+                shockwaveSprite.enabled = false;
+                isShocked = false;
+                animator.SetBool("isElectro", false);
+            }
+        }
     }
 
     void SetRotation()
@@ -79,7 +105,8 @@ public class Player : PlayerController
             {
                 foreach (AnimationsTestScript boosterAnim in child.GetComponentsInChildren<AnimationsTestScript>())
                 {
-                    boosterAnim.isBoosting = true;
+                    //boosterAnim.isBoosting = true;
+                    ShockingFunction(boosterAnim);
                 }
             }
         }
@@ -105,5 +132,14 @@ public class Player : PlayerController
         }
     }
 
+
+    void ShockingFunction(AnimationsTestScript boosterAnim)
+    {
+        shockwaveSprite.enabled = true;
+        boosterAnim.gotShocked = true;
+        isShocked = true;
+        animator.SetBool("isElectro", true);
+        startTime = Time.time;
+    }
 
 }
