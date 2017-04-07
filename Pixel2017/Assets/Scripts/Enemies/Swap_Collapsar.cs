@@ -1,0 +1,55 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Swap_Collapsar : MonoBehaviour
+{
+    private CircleCollider2D radius_coll;
+    private GameObject attractObj;
+    public int speed;
+    public float distance;
+    private Transform target;
+    private Transform startFrom;
+    private GameObject otherPlayerToSwap;
+    private Player attracked_player;
+    private Player[] players = new Player[2];
+
+    // Use this for initialization
+    void Start()
+    {
+        GameObject[] players_gameObject = GameObject.FindGameObjectsWithTag("Player");
+        for (int i = 0; i < players_gameObject.Length; ++i){
+            players[i] = players_gameObject[i].GetComponent<Player>();
+        }
+    }
+
+    // Update is called once per frame
+    void Update(){
+        checkCollision();
+    }
+
+    private void OnTriggerEnter2D(Collider2D coll){
+        attractObj = coll.gameObject;
+        attracked_player = coll.gameObject.GetComponent<Player>();
+    }
+
+    private void checkCollision() {
+        if (attractObj != null && (Vector3.Distance(transform.position, attractObj.transform.position) > distance)){
+            attractObj.transform.position = Vector3.MoveTowards(attractObj.transform.position, transform.position, speed * Time.deltaTime);
+        }
+        else if ((attractObj != null && Vector3.Distance(transform.position, attractObj.transform.position) <= distance)){
+            for (int i = 0; i < players.Length; ++i){
+                if (players[i].gameObject.name != attractObj.gameObject.name){
+                    startFrom = transform;
+                    otherPlayerToSwap = players[i].gameObject;
+                    target = otherPlayerToSwap.transform;
+                }
+            }
+            if (target != null && otherPlayerToSwap != null){
+                attractObj.transform.position = target.position;
+                otherPlayerToSwap.transform.position = startFrom.position;
+                Destroy(this.gameObject);
+            }
+        }
+    }
+}
