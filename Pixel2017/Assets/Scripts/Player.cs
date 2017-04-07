@@ -13,7 +13,13 @@ public class Player : PlayerController
     void Start()
     {
         animator = GetComponent<Animator>();
+        this.OnDie += performDie;
     }
+        
+    void performDie() {
+        Destroy(this.gameObject);
+    }
+
 
     void Update()
     {
