@@ -15,6 +15,7 @@ public class Player : PlayerController
     public bool isShocked = false;
     private float startTime;
     private float shockedTime = 2.0f;
+    private float startSpeed;
 
     void Start()
     {
@@ -29,6 +30,9 @@ public class Player : PlayerController
         }
         startTime = Time.time;
         this.OnDie += performDie;
+
+        startSpeed = speed;
+       
     }
         
     void performDie() {
@@ -68,7 +72,7 @@ public class Player : PlayerController
                     isShocked = false;
                     gotShocked = false;
                     animator.SetBool("isElectro", false);
-                    speed = 2.5f;
+                    speed = startSpeed;
                 }
             }
         }
