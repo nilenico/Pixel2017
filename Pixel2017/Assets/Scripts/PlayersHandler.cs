@@ -9,9 +9,11 @@ public class PlayersHandler : MonoBehaviour {
     void Start () {
         vPlayers = GameObject.FindGameObjectsWithTag("Player");
         for(int i = 0; i < InputManager.Devices.Count; ++i ) {
-            if(vPlayers.Length > i) {
+            if (vPlayers.Length > i)
+            {
                 vPlayers[i].GetComponent<Player>().setPid(i);
             }
+            else break;
         }   
     }
 }
