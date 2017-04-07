@@ -5,16 +5,27 @@ using UnityEngine;
 public class Spawner : MonoBehaviour {
 
     public GameObject[] enemies;
-    public Vector2 spawnValues;
-    private float spawnWait;
-    private float spawnMostWait = 10.0f;
-    private float spawnLeastWait = 8.0f;
-    public int startWait = 1;
-    public bool stop;
+    public GameObject[] powerUps;
+
+    private float enemySpawnWait;
+    private float enemySpawnMostWait = 10.0f; //10.0f
+    private float enemySpawnLeastWait = 8.0f; // 8.0f
+
+    private float powerUpSpawnWait;
+    private float powerUpSpawnMostWait = 2.0f;
+    private float powerUpSpawnLeastWait = 1.0f;
+
+    private int startWait = 1;
+    public bool enemiesStop;
+    public bool powerUpsStop;
 
     int randEnemy;
-    private Vector2 spawnPosition;
-    private int radius = 50;
+    int randPowerUp;
+
+    private Vector2 enemySpawnPosition;
+    private Vector2 powerUpSpawnPosition;
+    private int enemyOuterRadius = 50;
+    private int powerUpInnerRadius = 15;
 
     float spawnAngle;
 
@@ -22,32 +33,51 @@ public class Spawner : MonoBehaviour {
     void Start () {
         
 
-        StartCoroutine(waitSpawner());
+        StartCoroutine(waitEnemySpawner());
+        StartCoroutine(waitPowerUpSpawner());
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        spawnWait = Random.Range(spawnLeastWait, spawnMostWait);
+        enemySpawnWait = Random.Range(enemySpawnLeastWait, enemySpawnMostWait);
+        powerUpSpawnWait = Random.Range(powerUpSpawnLeastWait, powerUpSpawnMostWait);
+
         spawnAngle = Random.Range(0, 360);
+
     }
 
-    IEnumerator waitSpawner()
+    IEnumerator waitEnemySpawner()
     {
         yield return new WaitForSeconds(startWait);
 
-        while (!stop)
+        while (!enemiesStop)
         {
             //do stuff
             randEnemy = Random.Range(0, enemies.Length);
 
-            float xValue = Mathf.Sin(spawnAngle) * radius;
-            float yValue = Mathf.Cos(spawnAngle) * radius;
+            float xValue = Mathf.Sin(spawnAngle) * enemyOuterRadius;
+            float yValue = Mathf.Cos(spawnAngle) * enemyOuterRadius;
             
-            spawnPosition = new Vector2(xValue, yValue);
-            Instantiate(enemies[randEnemy], spawnPosition, transform.rotation);
+            enemySpawnPosition = new Vector2(xValue, yValue);
+            Instantiate(enemies[randEnemy], enemySpawnPosition, transform.rotation);
 
-            yield return new WaitForSeconds(spawnWait);
+            yield return new WaitForSeconds(enemySpawnWait);
 
+        }
+    }
+
+    IEnumerator waitPowerUpSpawner()
+    {
+        yield return new WaitForSeconds(startWait);
+
+        while (!powerUpsStop)
+        {
+            randPowerUp = Random.Range(0, powerUps.Length);
+
+            powerUpSpawnPosition = Random.insideUnitCircle * powerUpInnerRadius;
+            Instantiate(powerUps[randPowerUp], powerUpSpawnPosition, transform.rotation);
+
+            yield return new WaitForSeconds(powerUpSpawnWait);
         }
     }
 }
