@@ -16,7 +16,6 @@ public class Player : PlayerController
     private float startTime;
     private float shockedTime = 2.0f;
 
-
     void Start()
     {
         boxCollider = GetComponent<BoxCollider2D>();
@@ -69,6 +68,7 @@ public class Player : PlayerController
                     isShocked = false;
                     gotShocked = false;
                     animator.SetBool("isElectro", false);
+                    speed = 2.5f;
                 }
             }
         }
