@@ -6,9 +6,11 @@ using System;
 
 public class Player : PlayerController
 {
+    private Animator animator;
     protected GameObject border;
     void Start() {
-       this.OnDie += performDie;
+        animator = GetComponent<Animator>();
+        this.OnDie += performDie;
     }
         
     void performDie() {
@@ -16,10 +18,6 @@ public class Player : PlayerController
     }
     private bool animationIsSet = false;
 
-    void Start()
-    {
-        animator = GetComponent<Animator>();
-    }
 
     void Update()
     {
