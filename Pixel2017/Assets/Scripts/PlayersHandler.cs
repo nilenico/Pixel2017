@@ -16,4 +16,7 @@ public class PlayersHandler : MonoBehaviour {
             else break;
         }   
     }
+
+    void Update() {
+    }
 }
