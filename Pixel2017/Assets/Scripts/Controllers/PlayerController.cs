@@ -6,7 +6,7 @@ using System;
 
 public class PlayerController : MonoBehaviour {
     protected int pid = 0;
-    public float speed = 5;
+    public float speed = 10;
     private Vector3 velocity;
 
     protected delegate void Die();
