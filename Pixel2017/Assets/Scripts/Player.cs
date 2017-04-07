@@ -8,10 +8,6 @@ public class Player : MonoBehaviour
 
     List<Item> items;
 
-
-    void Start()
-    {
-        int i = InputManager.Devices.Count;
-    }
+    
 
 }
