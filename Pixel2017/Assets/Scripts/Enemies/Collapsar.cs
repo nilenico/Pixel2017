@@ -9,6 +9,8 @@ public class Collapsar : MonoBehaviour {
     private GameObject attractObj;
     public int speed;
     public float distance;
+    public bool swap_state;
+    private Transform target;
 
     // Use this for initialization
     void Start () {
@@ -16,9 +18,14 @@ public class Collapsar : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (attractObj != null && (Vector3.Distance(transform.position, attractObj.transform.position) > distance)) {
-            attractObj.transform.position = Vector3.MoveTowards(attractObj.transform.position, transform.position, speed* Time.deltaTime);
-        }   
+        if (attractObj != null && (Vector3.Distance(transform.position, attractObj.transform.position) > distance)){
+            attractObj.transform.position = Vector3.MoveTowards(attractObj.transform.position, transform.position, speed * Time.deltaTime);
+        }
+        else if ((attractObj != null && Vector3.Distance(transform.position, attractObj.transform.position) <= distance) && swap_state) {
+            if (target != null){
+                attractObj.transform.position = target.position;
+            }
+        }
 	}
 
     private void OnTriggerEnter2D(Collider2D coll) {
