@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 61b610cec0e7577478613cb65a31202a
+timeCreated: 1491549881
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Crash Scene
+  fontNames:
+  - Crash Scene
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
