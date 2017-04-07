@@ -8,15 +8,18 @@ public class Player : PlayerController
 {
     private Animator animator;
     private SpriteRenderer shockwaveSprite;
-    
+    private BoxCollider2D boxCollider;
+
     private bool animationIsSet = false;
+    public bool gotShocked = false;
     public bool isShocked = false;
     private float startTime;
-    private float shockedTime = 3.0f;
+    private float shockedTime = 2.0f;
 
 
     void Start()
     {
+        boxCollider = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
         foreach (Transform child in transform)
         {
@@ -46,20 +49,27 @@ public class Player : PlayerController
 
     void Actions()
     {
-        if(!isShocked)
+        if(!gotShocked)
         {
             SetRotation();
             CheckForPush();
-            CollectItem();
         }
         else
         {
-            CheckForPush();
-            if ((startTime + shockedTime) <= Time.time)
+            if (!isShocked)
             {
-                shockwaveSprite.enabled = false;
-                isShocked = false;
-                animator.SetBool("isElectro", false);
+                CallShock();
+            }
+            else
+            { 
+                CheckForPush();
+                if ((startTime + shockedTime) <= Time.time)
+                {
+                    shockwaveSprite.enabled = false;
+                    isShocked = false;
+                    gotShocked = false;
+                    animator.SetBool("isElectro", false);
+                }
             }
         }
     }
@@ -102,22 +112,6 @@ public class Player : PlayerController
         }
     }
 
-    void CollectItem()
-    {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, 0.8f);
-        if (hit.collider != null && hit.transform.tag == "Item")
-        {
-            foreach (Transform child in transform)
-            {
-                foreach (AnimationsTestScript boosterAnim in child.GetComponentsInChildren<AnimationsTestScript>())
-                {
-                    //boosterAnim.isBoosting = true;
-                    ShockingFunction(boosterAnim);
-                }
-            }
-        }
-    }
-
 
     void SetAnimators()
     {
@@ -146,6 +140,18 @@ public class Player : PlayerController
         isShocked = true;
         animator.SetBool("isElectro", true);
         startTime = Time.time;
+    }
+
+
+    void CallShock()
+    {
+        foreach (Transform child in transform)
+        {
+            foreach (AnimationsTestScript boosterAnim in child.GetComponentsInChildren<AnimationsTestScript>())
+            {
+                ShockingFunction(boosterAnim);
+            }
+        }
     }
 
 }
