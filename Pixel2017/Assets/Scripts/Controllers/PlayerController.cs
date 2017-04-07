@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour {
     protected delegate void Die();
     protected event Die OnDie;
 
+    public delegate void Win();
+    public event Win OnWin;
+        
     public void setPid(int pid) {
         this.pid = pid;
     }
