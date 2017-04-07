@@ -29,6 +29,8 @@ public class Collapsar : MonoBehaviour {
 	}
 
     private void OnTriggerEnter2D(Collider2D coll) {
-        attractObj = coll.gameObject;
+        if (coll.tag.Equals("Player")){
+            attractObj = coll.gameObject;
+        }
     }
 }

@@ -40,23 +40,19 @@ public class WarpSpeed : MonoBehaviour {
         }
 	}
 
-	public void Engage()
-	{
+	public void Engage(){
 		isWarping = true;
 	}
 
-	public void Disengage()
-	{
+	public void Disengage(){
 		isWarping = false;
 	}
 
-	bool atWarpSpeed()
-	{
+	bool atWarpSpeed(){
 		return rend.velocityScale < WarpDistortion;
 	}
 
-	bool atNormalSpeed()
-	{
+	bool atNormalSpeed(){
 		return rend.velocityScale > 0;
 	}
 }
