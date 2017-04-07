@@ -24,15 +24,15 @@ public class PlayerController : MonoBehaviour {
             velocity.y += InputManager.Devices[pid].LeftStickY.Value * speed;
             transform.position += velocity * speed * Time.deltaTime;
 
-            Vector3 offset = transform.position + transform.up *0.3f;
+            Vector3 offset = transform.position + transform.up * 1.8f;
 
             RaycastHit2D upHit = Physics2D.Raycast(offset, transform.up, 0.03f);
-            offset = transform.position - transform.right * 0.3f;
+            offset = transform.position - transform.right * 1.8f;
             RaycastHit2D leftHit = Physics2D.Raycast(offset, -transform.right, 0.03f);
 
             if (leftHit.collider != null && (leftHit.transform.tag == "Wall" || leftHit.transform.tag == "Border"))
             {
-                offset = transform.position + transform.right * 0.3f;
+                offset = transform.position + transform.right * 1.8f;
                 RaycastHit2D rightHit = Physics2D.Raycast(offset, transform.right, 0.03f);
                 if (rightHit.collider != null && (rightHit.transform.tag == "Wall" || rightHit.transform.tag == "Border"))
                 {
@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour {
 
             if (upHit.collider != null && (upHit.transform.tag == "Wall" || upHit.transform.tag == "Border"))   
             {
-                offset = transform.position - transform.up * 0.3f;
+                offset = transform.position - transform.up * 0.5f;
                 RaycastHit2D downHit = Physics2D.Raycast(offset, -transform.up, 0.03f);
                 if (downHit.collider != null && (downHit.transform.tag == "Wall" || downHit.transform.tag == "Border")) {
                     if (OnDie != null)

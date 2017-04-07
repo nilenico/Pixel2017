@@ -19,7 +19,6 @@ public class Player : PlayerController
     void performDie() {
         Destroy(this.gameObject);
     }
-    private bool animationIsSet = false;
 
 
     void Update()

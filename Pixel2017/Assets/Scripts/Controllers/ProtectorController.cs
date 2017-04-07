@@ -13,6 +13,8 @@ public class ProtectorController : MonoBehaviour {
 	void Update () {
         if (AxisX == null || AxisY == null)
             Destroy(this.gameObject);
-        transform.position = new Vector3(AxisY.transform.position.x, AxisX.transform.position.y, -1);
+        else {
+            transform.position = new Vector3(AxisY.transform.position.x, AxisX.transform.position.y, -1);
+        }
 	}
 }
