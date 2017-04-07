@@ -20,8 +20,8 @@ public class PlayerController : MonoBehaviour {
         if(InputManager.Devices.Count > 0)
         {
             velocity = Vector3.zero;
-            velocity.x += InputManager.Devices[this.pid].LeftStickX.Value;
-            velocity.y += InputManager.Devices[pid].LeftStickY.Value;
+            velocity.x += InputManager.Devices[pid].LeftStickX.Value * speed;
+            velocity.y += InputManager.Devices[pid].LeftStickY.Value * speed;
             transform.position += velocity * speed * Time.deltaTime;
 
             Vector3 offset = transform.position + transform.up *0.3f;

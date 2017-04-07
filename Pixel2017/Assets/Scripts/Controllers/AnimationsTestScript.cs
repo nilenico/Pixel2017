@@ -26,21 +26,5 @@ public class AnimationsTestScript : MonoBehaviour
             animator.SetBool("isBoosting", false);
         }
 
-
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            animator.SetBool("isClose", true);
-            animator.SetBool("isPushing", false);
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            animator.SetBool("isClose", false);
-            animator.SetBool("isPushing", true);
-        }
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            animator.SetBool("isClose", false);
-            animator.SetBool("isPushing", false);
-        }
     }
 }
