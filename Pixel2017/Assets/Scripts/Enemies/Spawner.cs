@@ -8,13 +8,13 @@ public class Spawner : MonoBehaviour {
     public Vector2 spawnValues;
     private float spawnWait;
     private float spawnMostWait = 10.0f;
-    private float spawnLeastWait = 7.0f;
+    private float spawnLeastWait = 8.0f;
     public int startWait = 1;
     public bool stop;
 
     int randEnemy;
     private Vector2 spawnPosition;
-    private int radius = 25;
+    private int radius = 50;
 
     float spawnAngle;
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Satellite_Beam : MonoBehaviour
+public class Beam : MonoBehaviour
 {
     public Vector3 beam_scale;
 
