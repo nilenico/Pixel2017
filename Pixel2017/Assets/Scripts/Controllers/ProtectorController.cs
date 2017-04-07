@@ -11,9 +11,7 @@ public class ProtectorController : MonoBehaviour {
 	} 
 
 	void Update () {
-        float hauteurX = AxisX.transform.position.y;
-       // float hauteurX = AxisX.transform.position.y;
 
-        transform.position = new Vector3(0, 0, 0);
+        transform.position = new Vector3(AxisY.transform.position.x, AxisX.transform.position.y, -1);
 	}
 }
