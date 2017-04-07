@@ -33,7 +33,7 @@ public class PlayerController : Player {
     {
         if (coll.tag.Equals("speed_boost"))
         {
-            movingSpeed *= 1.5f;
+            speed *= 1.5f;
         }
     }
 }
