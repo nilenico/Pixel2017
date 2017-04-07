@@ -5,7 +5,7 @@ using InControl;
 using System;
 
 public class PlayerController : MonoBehaviour {
-    protected int pid = 1;
+    protected int pid = 0;
     public float speed = 5;
     private Vector3 velocity;
 
@@ -15,8 +15,8 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate() {
         velocity = Vector3.zero;
-        velocity.x += InputManager.Devices[pid].LeftStickX.Value;
-        velocity.y += InputManager.Devices[pid].LeftStickY.Value;
+        velocity.x += InputManager.Devices[this.pid].LeftStickX.Value;
+        velocity.y += InputManager.Devices[this.pid].LeftStickY.Value;
         transform.position += velocity * speed * Time.deltaTime; ;
     }
 }
