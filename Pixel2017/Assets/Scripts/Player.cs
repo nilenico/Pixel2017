@@ -16,7 +16,6 @@ public class Player : PlayerController
     private float startTime;
     private float shockedTime = 2.0f;
 
-
     void Start()
     {
         boxCollider = GetComponent<BoxCollider2D>();
