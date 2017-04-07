@@ -24,6 +24,11 @@ public class CameraShake : MonoBehaviour {
         }
     }
 
+    void Start()
+    {
+        StartCoroutine(waitStartWarp());
+    }
+
     void OnEnable()
     {
         originalPos = camTransform.localPosition;
@@ -31,15 +36,15 @@ public class CameraShake : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
-        {
-            shaking = true;
-            shakeDuration = 2.5f;
-        }
-        else if (Input.GetKeyUp(KeyCode.Space))
-        {
-            shaking = false;
-        }
+        //if (Input.GetKey(KeyCode.Space))
+        //{
+        //    shaking = true;
+        //    shakeDuration = 2.5f;
+        //}
+        //else if (Input.GetKeyUp(KeyCode.Space))
+        //{
+        //    shaking = false;
+        //}
 
 
 
@@ -72,5 +77,11 @@ public class CameraShake : MonoBehaviour {
             shakeDuration -= Time.deltaTime * decreaseFactor;
         }
 
+    }
+
+    IEnumerator waitStartWarp()
+    {
+        yield return new WaitForSeconds(88.0f);
+        shaking = true;
     }
 }

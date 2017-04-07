@@ -14,8 +14,9 @@ public class Satellite : MonoBehaviour {
     private int beamTimeout;
     private int initial_time_beam = 300;
     private Vector3 normalizedDirection;
+    private float distanceToCenter;
     private float rotateSpeed = 60.0f;
-
+    private bool hasPlayed = false;
 
     // Use this for initialization
     void Start()
@@ -23,12 +24,17 @@ public class Satellite : MonoBehaviour {
         pos = transform.position;
         beamTimeout = initial_time_beam;
         normalizedDirection = (Vector3.zero - transform.position).normalized;
+        
+
+
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
         move();
         onRotate();
+
+        playEnterSound();
 
         if (beamTimeout <= 0)
         {
@@ -52,4 +58,13 @@ public class Satellite : MonoBehaviour {
         transform.Rotate(0, 0, Time.deltaTime * rotateSpeed);
     }
 
+    void playEnterSound()
+    {
+        distanceToCenter = Vector3.Distance(Vector3.zero, transform.position);
+        if (distanceToCenter < 35.0f && hasPlayed == false)
+        {
+            GetComponent<AudioSource>().Play();
+            hasPlayed = true;
+        }
+    }
 }
