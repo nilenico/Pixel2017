@@ -13,6 +13,9 @@ public class Satellite : MonoBehaviour {
     Vector3 pos;
     private int beamTimeout;
     private int initial_time_beam = 300;
+    private Vector3 normalizedDirection;
+    private float rotateSpeed = 100.0f;
+
 
     // Use this for initialization
     void Start()
@@ -20,11 +23,13 @@ public class Satellite : MonoBehaviour {
         pos = transform.position;
         axis = transform.right;  // May or may not be the axis you want
         beamTimeout = initial_time_beam;
+        normalizedDirection = (Vector3.zero - transform.position).normalized;
     }
 	
 	// Update is called once per frame
 	void Update () {
         move();
+        onRotate();
         if (beamTimeout <= 0)
         {
             releaseBeam(beam_go);
@@ -34,12 +39,18 @@ public class Satellite : MonoBehaviour {
 	}
 
     private void move() {
-        pos += transform.up * Time.deltaTime * MoveSpeed;
+        pos += normalizedDirection * MoveSpeed * Time.deltaTime;
+        Vector3 axis = new Vector3(-normalizedDirection.x, normalizedDirection.y);
         transform.position = pos + axis * Mathf.Sin(Time.time * frequency) * magnitude;
     }
 
     private void releaseBeam(GameObject beam) {
         Instantiate(beam, transform.position, Quaternion.identity);
+    }
+
+    void onRotate()
+    {
+        transform.Rotate(0, 0, Time.deltaTime * rotateSpeed);
     }
 
 }
