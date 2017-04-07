@@ -68,6 +68,7 @@ public class Player : PlayerController
                     isShocked = false;
                     gotShocked = false;
                     animator.SetBool("isElectro", false);
+                    speed = 2.5f;
                 }
             }
         }
