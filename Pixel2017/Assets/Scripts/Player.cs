@@ -7,7 +7,7 @@ using System;
 public class Player : PlayerController
 {
     private Animator animator;
-
+    
     private bool animationIsSet = false;
 
     void Start()
@@ -21,45 +21,67 @@ public class Player : PlayerController
         {
             SetAnimators();
         }
+        Actions();
+
+    }
+
+    void Actions()
+    {
         SetRotation();
+        CheckForPush();
+        CollectItem();
+    }
 
-
-        if (Input.GetKeyDown(KeyCode.S))
+    void SetRotation()
+    {
+        if (InputManager.Devices[pid].LeftStickX.Value < -0.2 ||
+            InputManager.Devices[pid].LeftStickX.Value > 0.2 ||
+            InputManager.Devices[pid].LeftStickY.Value < -0.2 ||
+            InputManager.Devices[pid].LeftStickY.Value > 0.2)
         {
-            transform.rotation = new Quaternion(0, 0, -90, 0);
+            float angle = Mathf.Atan2(InputManager.Devices[pid].LeftStickX.Value, InputManager.Devices[pid].LeftStickY.Value);
+            float degree = angle * Mathf.Rad2Deg;
+            Quaternion eulerRot = Quaternion.Euler(0.0f, 0.0f, -degree);
+            transform.rotation = Quaternion.Slerp(transform.rotation, eulerRot, Time.deltaTime * 10);
+        }
+    }
+
+
+    void CheckForPush()
+    {
+        Vector3 rayOffset = transform.position + transform.up * 1.8f;
+        RaycastHit2D hit1 = Physics2D.Raycast(rayOffset, transform.up, 0.8f);
+        RaycastHit2D hit2 = Physics2D.Raycast(rayOffset, transform.up, 0.3f);
+
+        if (hit1.collider != null && (hit1.transform.tag == "Wall" || hit1.transform.tag == "Border"))
+        {
             animator.SetBool("isClose", true);
             animator.SetBool("isPushing", false);
+            if (hit2.collider != null && (hit2.transform.tag == "Wall" || hit2.transform.tag == "Border"))
+            {
+                animator.SetBool("isClose", false);
+                animator.SetBool("isPushing", true);
+            }
         }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            transform.rotation = new Quaternion(0, 0, 90, 0);
-            animator.SetBool("isClose", false);
-            animator.SetBool("isPushing", true);
-        }
-        if (Input.GetKeyDown(KeyCode.F))
+        else
         {
             animator.SetBool("isClose", false);
             animator.SetBool("isPushing", false);
         }
     }
 
-    void SetRotation()
+    void CollectItem()
     {
-        if(InputManager.Devices[pid].LeftStickX.Value > 0.2)
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, 0.8f);
+        if (hit.collider != null && hit.transform.tag == "Item")
         {
-            transform.eulerAngles = new Vector3(0, 0, -90);
-        }
-        else if (InputManager.Devices[pid].LeftStickX.Value < -0.2)
-        {
-            transform.eulerAngles = new Vector3(0, 0, 90);
-        }
-        else if (InputManager.Devices[pid].LeftStickY.Value > 0.2)
-        {
-            transform.eulerAngles = new Vector3(0, 0, 0);
-        }
-        else if (InputManager.Devices[pid].LeftStickY.Value < -0.2)
-        {
-            transform.eulerAngles = new Vector3(0, 0, 180);
+            foreach (Transform child in transform)
+            {
+                foreach (AnimationsTestScript boosterAnim in child.GetComponentsInChildren<AnimationsTestScript>())
+                {
+                    boosterAnim.isBoosting = true;
+                }
+            }
         }
     }
 
