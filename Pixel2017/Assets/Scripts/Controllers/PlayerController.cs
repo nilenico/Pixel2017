@@ -12,9 +12,11 @@ public class PlayerController : MonoBehaviour {
     protected delegate void Die();
     protected event Die OnDie;
 
-    public delegate void Win();
-    public event Win OnWin;
-        
+
+    public delegate void RemovePlayer();
+    public static event RemovePlayer OnRemovePlayer;
+
+
     public void setPid(int pid) {
         this.pid = pid;
     }
@@ -41,6 +43,8 @@ public class PlayerController : MonoBehaviour {
                 {
                     if (OnDie != null)
                         OnDie();
+                    if (OnRemovePlayer != null)
+                        OnRemovePlayer();
                 }
             }
 
@@ -51,6 +55,8 @@ public class PlayerController : MonoBehaviour {
                 if (downHit.collider != null && (downHit.transform.tag == "Wall" || downHit.transform.tag == "Border")) {
                     if (OnDie != null)
                         OnDie();
+                    if (OnRemovePlayer != null)
+                        OnRemovePlayer();
 
                 }
             }
