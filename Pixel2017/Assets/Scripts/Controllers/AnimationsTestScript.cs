@@ -6,6 +6,7 @@ public class AnimationsTestScript : MonoBehaviour
 {
 
     private Animator animator;
+    public bool isBoosting = false;
 
 
     void Start ()
@@ -16,6 +17,15 @@ public class AnimationsTestScript : MonoBehaviour
 	
 	void Update ()
     {
+        if(isBoosting)
+            animator.SetBool("isBoosting", true);
+
+
+        if (!isBoosting)
+            animator.SetBool("isBoosting", false);
+
+
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             animator.SetBool("isBoosting", true);

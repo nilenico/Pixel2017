@@ -36,7 +36,7 @@ public class enemyAsteroid : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D coll) {
         if (coll.gameObject.tag.Equals("Player")) {
-            coll.transform.position += normalizedDirection * 60 * Time.deltaTime;
+            coll.transform.position += normalizedDirection * 30 * Time.deltaTime;
             coll.transform.Rotate(0, 0, Time.deltaTime * rotateSpeed);
         }
     }
