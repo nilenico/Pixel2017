@@ -26,7 +26,13 @@ public class Player : PlayerController
             }
         }
         startTime = Time.time;
+        this.OnDie += performDie;
     }
+        
+    void performDie() {
+        Destroy(this.gameObject);
+    }
+
 
     void Update()
     {

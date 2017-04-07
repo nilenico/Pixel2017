@@ -21,7 +21,6 @@ public class Satellite : MonoBehaviour {
     void Start()
     {
         pos = transform.position;
-        axis = transform.right;  // May or may not be the axis you want
         beamTimeout = initial_time_beam;
         normalizedDirection = (Vector3.zero - transform.position).normalized;
     }
@@ -41,7 +40,7 @@ public class Satellite : MonoBehaviour {
 
     private void move() {
         pos += normalizedDirection * MoveSpeed * Time.deltaTime;
-        Vector3 axis = new Vector3(-normalizedDirection.x, normalizedDirection.y);
+        axis = new Vector3(-normalizedDirection.x, normalizedDirection.y);
         transform.position = pos + axis * Mathf.Sin(Time.time * frequency) * magnitude;
     }
 
