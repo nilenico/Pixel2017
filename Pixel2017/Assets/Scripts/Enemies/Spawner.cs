@@ -5,7 +5,7 @@ using UnityEngine;
 public class Spawner : MonoBehaviour {
 
     public GameObject[] enemies;
-    public GameObject[] powerUps;
+    public GameObject powerUps;
 
     private float enemySpawnWait;
     private float enemySpawnMostWait = 10.0f; //10.0f
@@ -72,10 +72,8 @@ public class Spawner : MonoBehaviour {
 
         while (!powerUpsStop)
         {
-            randPowerUp = Random.Range(0, powerUps.Length);
-
             powerUpSpawnPosition = Random.insideUnitCircle * powerUpInnerRadius;
-            Instantiate(powerUps[randPowerUp], powerUpSpawnPosition, transform.rotation);
+            Instantiate(powerUps, powerUpSpawnPosition, transform.rotation);
 
             yield return new WaitForSeconds(powerUpSpawnWait);
         }

@@ -54,7 +54,6 @@ public class Player : PlayerController
     {
         StartCoroutine(playPanicSound());
         StartCoroutine(Flash());
-        Debug.Log("panic!");
     }
 
     IEnumerator Flash()

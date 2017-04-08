@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Swap_Collapsar : MonoBehaviour
+public class Swap_Collapsar : Item
 {
     private CircleCollider2D radius_coll;
     private GameObject attractObj;
@@ -17,6 +17,7 @@ public class Swap_Collapsar : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        Destroy(this.gameObject, timeout);
         GameObject[] players_gameObject = GameObject.FindGameObjectsWithTag("Player");
         for (int i = 0; i < players_gameObject.Length; ++i){
             players[i] = players_gameObject[i].GetComponent<Player>();
@@ -28,7 +29,7 @@ public class Swap_Collapsar : MonoBehaviour
         checkCollision();
     }
 
-    private void OnTriggerEnter2D(Collider2D coll){
+    void OnTriggerEnter2D(Collider2D coll){
         if (coll.gameObject.tag.Equals("Player")){
             attractObj = (coll.gameObject);
             attracked_player = coll.gameObject.GetComponent<Player>();

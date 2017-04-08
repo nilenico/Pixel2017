@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpeedBoost : MonoBehaviour {
+public class SpeedBoost : Item {
 
     private GameObject speedyObj;
     private int timeout;

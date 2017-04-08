@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Collapsar : MonoBehaviour {
+public class Collapsar : Item {
 
     public GameObject radius;
     private CircleCollider2D radius_coll;
@@ -11,7 +11,6 @@ public class Collapsar : MonoBehaviour {
     public float distance;
     public bool swap_state;
     private Transform target;
-    private int timeout;
     public int initial_timeout;
 
     // Use this for initialization
