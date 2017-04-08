@@ -7,6 +7,8 @@ public class Timer : MonoBehaviour {
     public float speed = 1;
     public bool active;
     public GameObject level;
+    public GameObject Wall1;
+    public GameObject Wall2;
     private Vector3 shrinkspeed;
 
     public void Stop() { active = false; }
@@ -20,6 +22,12 @@ public class Timer : MonoBehaviour {
             if(startTime < Time.time + speed) {
                 //Reduce 
                 level.transform.localScale -= shrinkspeed * speed * Time.deltaTime;
+                if(Wall1 != null) {
+                    Wall1.transform.localScale -=  new Vector3(0, 2.45f * speed * Time.deltaTime, 0);
+                }
+                if (Wall2 != null) {
+                    Wall2.transform.localScale -= new Vector3(0, 2.45f * speed * Time.deltaTime, 0);
+                }
                 startTime = Time.time;            
             }
         }
