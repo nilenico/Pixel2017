@@ -1,14 +1,12 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using InControl;
-using System;
 
 public class PlayerController : MonoBehaviour {
     protected int pid = 0;
     public float speed = 10;
     private Vector3 velocity;
-    bool gameStarted = true;
+    bool gameStarted = false;
 
     private const float raycastLength = 0.03f;
     private const float raycastDistance = 1.8f;
