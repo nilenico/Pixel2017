@@ -12,7 +12,7 @@ public class Satellite : MonoBehaviour {
     private Vector3 axis;
     Vector3 pos;
     private int beamTimeout;
-    private int initial_time_beam = 300;
+    private int initial_time_beam = 0;
     private Vector3 normalizedDirection;
     private float distanceToCenter;
     private float rotateSpeed = 60.0f;
@@ -24,9 +24,7 @@ public class Satellite : MonoBehaviour {
         pos = transform.position;
         beamTimeout = initial_time_beam;
         normalizedDirection = (Vector3.zero - transform.position).normalized;
-        
-
-
+        releaseBeam(beam_go);
     }
 
     // Update is called once per frame
@@ -36,12 +34,12 @@ public class Satellite : MonoBehaviour {
 
         playEnterSound();
 
-        if (beamTimeout <= 0)
+        /*if (beamTimeout <= 0)
         {
-            releaseBeam(beam_go);
+            
             beamTimeout = initial_time_beam;
         }
-        else { beamTimeout--; }
+        else { beamTimeout--; }*/
 	}
 
     private void move() {
@@ -52,6 +50,7 @@ public class Satellite : MonoBehaviour {
 
     private void releaseBeam(GameObject beam) {
         (Instantiate(beam, transform.position, Quaternion.identity) as GameObject).transform.parent = this.transform;
+            
     }
 
     void onRotate(){
