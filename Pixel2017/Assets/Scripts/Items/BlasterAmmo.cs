@@ -32,7 +32,6 @@ public class BlasterAmmo : MonoBehaviour {
             coll.GetComponent<Player>().gotShocked = true;
         }
         else if (coll.gameObject.tag.Equals("Target")) {
-            //Debug.Log("Touch Target");
             Destroy(coll.gameObject);
             Destroy(this.gameObject);
         }
