@@ -44,7 +44,6 @@ public class Spawner : MonoBehaviour {
         enemySpawnWait = Random.Range(enemySpawnLeastWait, enemySpawnMostWait);
         powerUpSpawnWait = Random.Range(powerUpSpawnLeastWait, powerUpSpawnMostWait);
         spawnAngle = Random.Range(0, 360);
-        Debug.Log(powerUpInnerRadius);
     }
 
     IEnumerator waitEnemySpawner()

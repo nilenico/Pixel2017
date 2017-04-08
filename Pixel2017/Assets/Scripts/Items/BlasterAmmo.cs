@@ -8,7 +8,6 @@ public class BlasterAmmo : MonoBehaviour {
     private Vector3 target;
     private Vector3 velocity;
     public Transform trs;
-    Vector3 direction;
     Vector3 origin;
 
 
