@@ -7,10 +7,8 @@ public class WanderingBackground : MonoBehaviour
 
     public float delai = 3;
     public bool isSpawning = true;
-    public static float maximumSpeed;
-    public float speed;
     private Object[] vProps;
-    
+    public static float maximumSpeed = 0.05f;
     private int startWait = 5;
     private float spawnAngle;
     private float screenAspect;
@@ -21,7 +19,6 @@ public class WanderingBackground : MonoBehaviour
     private float width;
 
     void Start() {
-        maximumSpeed = speed;
         vProps = Resources.LoadAll("Prefabs/Background");
         screenAspect = Camera.main.orthographicSize * Screen.width / Screen.height;
         startTime = Time.time;

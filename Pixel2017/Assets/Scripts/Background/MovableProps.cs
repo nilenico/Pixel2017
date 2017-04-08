@@ -9,10 +9,10 @@ public class MovableProps : MonoBehaviour {
     private Vector3 velocity;
     private Quaternion lookRotation;
 	void Start () {
-        speed *= Random.Range(0, WanderingBackground.maximumSpeed);
+        speed *= WanderingBackground.maximumSpeed;
         velocity = new Vector3(0 - transform.position.x, 0 - transform.position.y, 0);
         Destroy(this.gameObject, 20/speed);
-    }
+    }       
 	// Update is called once per frame
 	void Update () {
         if(rotate)
