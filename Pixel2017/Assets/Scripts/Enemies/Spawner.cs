@@ -40,12 +40,11 @@ public class Spawner : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        powerUpInnerRadius = timerSpeed * Time.deltaTime;
+        powerUpInnerRadius -= 0.06f * Time.deltaTime;
         enemySpawnWait = Random.Range(enemySpawnLeastWait, enemySpawnMostWait);
         powerUpSpawnWait = Random.Range(powerUpSpawnLeastWait, powerUpSpawnMostWait);
-        enemySpawnPosition *=
         spawnAngle = Random.Range(0, 360);
-
+        Debug.Log(powerUpInnerRadius);
     }
 
     IEnumerator waitEnemySpawner()

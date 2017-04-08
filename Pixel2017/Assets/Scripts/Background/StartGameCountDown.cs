@@ -36,6 +36,8 @@ public class StartGameCountDown : MonoBehaviour {
         yield return new WaitForSeconds(1.2f);
 
         transform.position = new Vector2(7.5f, -7.5f);
+        renderer.sprite = sprites[3];
+        yield return new WaitForSeconds(1.2f);
         renderer.enabled= false;
     }
 }
