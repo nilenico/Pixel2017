@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
     protected int pid = 0;
     public float speed = 10;
     private Vector3 velocity;
+    bool gameStarted = false;
 
     protected delegate void Die();
     protected event Die OnDie;
@@ -20,9 +21,19 @@ public class PlayerController : MonoBehaviour {
     public void setPid(int pid) {
         this.pid = pid;
     }
+     void Start()
+    {
+        StartCoroutine(waitForStart());
+    }
+
+    IEnumerator waitForStart()
+    {
+        yield return new WaitForSeconds(5.0f);
+        gameStarted = true;
+    }
 
     void FixedUpdate() {
-        if(InputManager.Devices.Count > 0)
+        if(InputManager.Devices.Count > 0 && gameStarted)
         {
             velocity = Vector3.zero;
             velocity.x += InputManager.Devices[pid].LeftStickX.Value * speed;

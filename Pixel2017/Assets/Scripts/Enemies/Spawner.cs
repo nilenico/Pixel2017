@@ -8,14 +8,14 @@ public class Spawner : MonoBehaviour {
     public GameObject[] powerUps;
 
     private float enemySpawnWait;
-    private float enemySpawnMostWait = 60.0f; //10.0f
-    private float enemySpawnLeastWait = 15.0f; // 8.0
+    private float enemySpawnMostWait = 10.0f; //10.0f
+    private float enemySpawnLeastWait = 8.0f; // 8.0
 
     private float powerUpSpawnWait;
     private float powerUpSpawnMostWait = 20.0f;
     private float powerUpSpawnLeastWait = 5.0f;
 
-    private int startWait = 1;
+    private int startWait = 5;
     public bool enemiesStop;
     public bool powerUpsStop;
 

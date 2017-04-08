@@ -9,6 +9,7 @@ public class Player : PlayerController
     private Animator animator;
     private SpriteRenderer shockwaveSprite;
     private BoxCollider2D boxCollider;
+    public AudioClip[] audioClips;
 
     private bool animationIsSet = false;
     public bool gotShocked = false;
@@ -16,9 +17,13 @@ public class Player : PlayerController
     private float startTime;
     private float shockedTime = 2.0f;
     private float startSpeed;
+    bool canPlayShock = true;
+
 
     void Start()
     {
+        AudioSource audio = GetComponent<AudioSource>();
+
         boxCollider = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
         foreach (Transform child in transform)
@@ -36,7 +41,8 @@ public class Player : PlayerController
     }
         
     void performDie() {
-        Destroy(this.gameObject);
+        StartCoroutine(playSound(1)); //OhNoNo sound
+        StartCoroutine(waitDestroyObject());
     }
 
 
@@ -47,6 +53,14 @@ public class Player : PlayerController
             SetAnimators();
         }
         Actions();
+
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            //performDie();
+            //CallShock();
+            //CheckForPush();
+        }
 
     }
 
@@ -110,6 +124,7 @@ public class Player : PlayerController
             {
                 animator.SetBool("isClose", false);
                 animator.SetBool("isPushing", true);
+                //StartCoroutine(playSound(2));
             }
         }
         else
@@ -152,6 +167,7 @@ public class Player : PlayerController
 
     void CallShock()
     {
+        StartCoroutine(playShockSound());
         foreach (Transform child in transform)
         {
             foreach (AnimationsTestScript boosterAnim in child.GetComponentsInChildren<AnimationsTestScript>())
@@ -159,6 +175,34 @@ public class Player : PlayerController
                 ShockingFunction(boosterAnim);
             }
         }
+    }
+
+    IEnumerator playSound(int audioClipIndex)
+    {
+        canPlayShock = false;
+        GetComponent<AudioSource>().clip = audioClips[audioClipIndex];
+        GetComponent<AudioSource>().Play();
+        yield return new WaitForSeconds(5.0f);
+        canPlayShock = true;
+    }
+
+    IEnumerator playShockSound()
+    {
+        if (canPlayShock)
+        {
+            canPlayShock = false;
+            GetComponent<AudioSource>().clip = audioClips[0];
+            GetComponent<AudioSource>().Play();
+            yield return new WaitForSeconds(5.0f);
+            canPlayShock = true;
+        }
+    }
+
+    IEnumerator waitDestroyObject()
+    {
+        //need this so the audioclip can finish playing
+        yield return new WaitForSeconds(4.0f);
+        Destroy(this.gameObject);
     }
 
 }
