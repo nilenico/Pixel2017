@@ -10,6 +10,7 @@ public class Player : PlayerController
     private SpriteRenderer shockwaveSprite;
     private BoxCollider2D boxCollider;
     public AudioClip[] audioClips;
+    private Blaster blaster;
 
     private bool animationIsSet = false;
     public bool gotShocked = false;
@@ -19,6 +20,7 @@ public class Player : PlayerController
     private float shockedTime = 2.0f;
     private float startSpeed;
     bool canPlayShock = true;
+    private bool canBlast;
 
 
     void Start()
@@ -63,6 +65,12 @@ public class Player : PlayerController
             //CheckForPush();
         }
 
+        if (canBlast){
+            if (InputManager.Devices[pid].Action1.IsPressed) {
+                LaunchMissile();
+                canBlast = false;
+            }
+        }
     }
 
     void Actions()
@@ -200,6 +208,17 @@ public class Player : PlayerController
             {
                 boosterAnim.isBoosting = true;
             }
+        }
+    }
+
+    public void SetCanBlast(bool canBlast, Blaster blaster) {
+        this.canBlast = canBlast;
+        this.blaster = blaster;
+    }
+
+    private void LaunchMissile() {
+        if (blaster != null) {
+            blaster.shoot();
         }
     }
 
