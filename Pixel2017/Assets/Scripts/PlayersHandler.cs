@@ -8,7 +8,7 @@ public class PlayersHandler : MonoBehaviour {
     public GameObject timer;
     public Image lblWin;
     void Start () {
-        lblWin.enabled = false;
+        //lblWin.enabled = false;
         PlayerController.OnRemovePlayer += removePlayer;
         vPlayers = GameObject.FindGameObjectsWithTag("Player");
         for(int i = 0; i < InputManager.Devices.Count; ++i ) {
@@ -26,7 +26,7 @@ public class PlayersHandler : MonoBehaviour {
 
     void Update() {
         if(count <= 1 ){
-            win();
+            //win();
         }
     }
     void win() {
