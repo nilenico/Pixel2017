@@ -8,10 +8,17 @@ public class PlayerController : MonoBehaviour {
     protected int pid = 0;
     public float speed = 10;
     private Vector3 velocity;
-    bool gameStarted = false;
+    bool gameStarted = true;
 
     private const float raycastLength = 0.03f;
     private const float raycastDistance = 1.8f;
+
+    //panic mode (close to dying)
+    private const float panicRaycastLenght = 3.0f;
+    private const float panicRaycastDistance = 1.8f;
+
+    protected delegate void Panic();
+    protected event Panic OnPanic;
 
     protected delegate void Die();
     protected event Die OnDie;
@@ -36,19 +43,21 @@ public class PlayerController : MonoBehaviour {
         if(!gameStarted)
             StartCoroutine(waitForStart());
 
-        if (InputManager.Devices.Count > 0 && gameStarted)
+        if (InputManager.Devices.Count >= 0 && gameStarted)
         {
             Vector3 offset = transform.position + transform.up * raycastDistance;
             RaycastHit2D upHit = Physics2D.Raycast(offset, transform.up, raycastLength);
-            Debug.DrawRay(offset, transform.up);
+            //Debug.DrawRay(offset, transform.up);
             offset = transform.position - transform.right * raycastDistance;
             RaycastHit2D leftHit = Physics2D.Raycast(offset, -transform.right, raycastLength);
+
+            onPanic();
 
             if (leftHit.collider != null && (leftHit.transform.tag == "Wall" || leftHit.transform.tag == "Border"))
             {
                 offset = transform.position + transform.right * raycastDistance;
                 RaycastHit2D rightHit = Physics2D.Raycast(offset, transform.right, raycastLength);
-                Debug.DrawRay(offset, transform.right);
+                //Debug.DrawRay(offset, transform.right);
                 if (rightHit.collider != null && (rightHit.transform.tag == "Wall" || rightHit.transform.tag == "Border"))
                 {
                     if (OnDie != null)
@@ -62,7 +71,7 @@ public class PlayerController : MonoBehaviour {
             {
                 offset = transform.position - transform.up ;
                 RaycastHit2D downHit = Physics2D.Raycast(offset, -transform.up, raycastLength);
-                Debug.DrawRay(offset, -transform.up);
+                //Debug.DrawRay(offset, -transform.up);
                 if (downHit.collider != null && (downHit.transform.tag == "Wall" || downHit.transform.tag == "Border")) {
                     if (OnDie != null)
                         OnDie();
@@ -75,6 +84,47 @@ public class PlayerController : MonoBehaviour {
             velocity.x += InputManager.Devices[pid].LeftStickX.Value * speed;
             velocity.y += InputManager.Devices[pid].LeftStickY.Value * speed;
             transform.position += velocity * speed * Time.deltaTime;
+        }
+    }
+
+    void onPanic()
+    {
+        Vector3 horizontalOffset = transform.position - transform.right * panicRaycastDistance;
+        RaycastHit2D leftHit = Physics2D.Raycast(horizontalOffset, -transform.right, panicRaycastLenght);
+
+        if (leftHit.collider != null && (leftHit.transform.tag == "Wall" || leftHit.transform.tag == "Border"))
+        {
+            //Debug.DrawRay(horizontalOffset, -transform.right * panicRaycastLenght, Color.green);
+
+            horizontalOffset = transform.position + transform.right * panicRaycastDistance;
+            RaycastHit2D rightHit = Physics2D.Raycast(horizontalOffset, transform.right, panicRaycastLenght);
+
+            if (rightHit.collider != null && (rightHit.transform.tag == "Wall" || rightHit.transform.tag == "Border"))
+            {
+                //Debug.DrawRay(horizontalOffset, transform.right * panicRaycastLenght, Color.green);
+
+                if (OnPanic != null)
+                    OnPanic();
+            }
+        }
+
+        Vector3 verticalOffset = transform.position + transform.up * panicRaycastDistance;
+        RaycastHit2D upHit = Physics2D.Raycast(verticalOffset, transform.up, panicRaycastLenght);
+
+        if (upHit.collider != null && (upHit.transform.tag == "Wall" || upHit.transform.tag == "Border"))
+        {
+            //Debug.DrawRay(verticalOffset, transform.up * panicRaycastLenght, Color.green);
+
+            verticalOffset = transform.position - transform.up;
+            RaycastHit2D downHit = Physics2D.Raycast(verticalOffset, -transform.up, panicRaycastLenght);
+
+            if (downHit.collider != null && (downHit.transform.tag == "Wall" || downHit.transform.tag == "Border"))
+            {
+                //Debug.DrawRay(verticalOffset, -transform.up * panicRaycastLenght, Color.green);
+
+                if (OnPanic != null)
+                    OnPanic();
+            }
         }
     }
 }
