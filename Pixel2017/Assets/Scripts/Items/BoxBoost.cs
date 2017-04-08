@@ -45,7 +45,8 @@ public class BoxBoost : MonoBehaviour {
     }
     private void InstantiateBlaster(GameObject player)
     {
-        //choosenItem = Instantiate(speedBoost, transform.position, Quaternion.identity);
+        choosenItem = Instantiate(blaster, transform.position, Quaternion.identity);
+        Destroy(this.gameObject);
     }
     private void InstantiateSwapCollapsar()
     {

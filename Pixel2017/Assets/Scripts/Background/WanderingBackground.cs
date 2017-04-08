@@ -5,49 +5,59 @@ using UnityEngine;
 public class WanderingBackground : MonoBehaviour
 {
 
-    public GameObject[] stuff;
-
-
-    private float stuffSpawnWait;
-    private float stuffSpawnMostWait = 20.0f;    
-    private float stuffSpawnLeastWait = 5.0f;
-
+    public float delai = 3;
     public bool isSpawning = true;
+    public static float maximumSpeed;
+    public float speed;
+    private Object[] vProps;
+    
     private int startWait = 5;
-    int randStuff;
+    private float spawnAngle;
+    private float screenAspect;
+    private const float offset = 15;
+    private bool propsTimeout = true;
+    private float timeout;
+    private float startTime;
+    private float width;
 
-    private Vector2 stuffSpawnPosition;
-    private int stuffOuterRadius = 50;
-    
-    float spawnAngle;
-    
-    void Start()
-    {
-        StartCoroutine(waitStuffSpawner());
+    void Start() {
+        maximumSpeed = speed;
+        vProps = Resources.LoadAll("Prefabs/Background");
+        screenAspect = Camera.main.orthographicSize * Screen.width / Screen.height;
+        startTime = Time.time;
+        width = Camera.main.orthographicSize * 2 * Camera.main.aspect / 2;
     }
+    void Update() {
 
-
-    void Update()
-    {
-        stuffSpawnWait = Random.Range(stuffSpawnLeastWait, stuffSpawnMostWait);
         spawnAngle = Random.Range(0, 360);
-    }
+        if(startTime + startTime <= Time.time) {
+            if(propsTimeout) {
+                float x;
+                float y;
+                if(Random.Range(0, 101) % 2 != 0)
+                {
+                    if(Random.Range(0, 101) % 2 != 0)
+                        y = Random.Range(-Camera.main.orthographicSize - 1, -Camera.main.orthographicSize - offset);
+                    else
+                        y = Random.Range(Camera.main.orthographicSize + 1, Camera.main.orthographicSize + offset);
+                    x = Random.Range(-width, width);
+                } else {
+                    if(Random.Range(0, 101) % 2 != 0)
+                        x = Random.Range(-width, -width - offset);
+                    else
+                        x = Random.Range(width, width + offset);
+                    y = Random.Range(Camera.main.orthographicSize, -Camera.main.orthographicSize);
+                }
 
 
-    IEnumerator waitStuffSpawner()
-    {
-        yield return new WaitForSeconds(startWait);
-        while(isSpawning)
-        {
-            randStuff = Random.Range(0, stuff.Length);
+                Vector3 stuffSpawnPosition = new Vector3(x, y, 0);
+                Instantiate(vProps[Random.Range(0, vProps.Length)], stuffSpawnPosition, transform.rotation);
 
-            float xValue = Mathf.Sin(spawnAngle) * stuffOuterRadius;
-            float yValue = Mathf.Cos(spawnAngle) * stuffOuterRadius;
-
-            stuffSpawnPosition = new Vector2(xValue, yValue);
-            Instantiate(stuff[randStuff], stuffSpawnPosition, transform.rotation);
-
-            yield return new WaitForSeconds(stuffSpawnWait);
+                propsTimeout = false;
+                timeout = Time.time;
+            } else if(timeout + Mathf.Clamp(delai, delai*0.2f, delai*1.2f) <= Time.time) {
+                propsTimeout = true;
+            }
         }
     }
 

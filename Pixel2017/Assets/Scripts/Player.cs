@@ -10,6 +10,7 @@ public class Player : PlayerController
     private SpriteRenderer shockwaveSprite;
     private BoxCollider2D boxCollider;
     public AudioClip[] audioClips;
+    private Blaster blaster;
 
     private bool animationIsSet = false;
     public bool gotShocked = false;
@@ -19,6 +20,7 @@ public class Player : PlayerController
     private float shockedTime = 2.0f;
     private float startSpeed;
     bool canPlayShock = true;
+    private bool canBlast;
 
 
     void Start()
@@ -35,15 +37,15 @@ public class Player : PlayerController
             }
         }
         startTime = Time.time;
-        this.OnDie += performDie;
+        this.OnDie += performDie;   
 
         startSpeed = speed;
 
     }
 
     void performDie() {
-        StartCoroutine(playSound(1)); //OhNoNo sound
-        StartCoroutine(waitDestroyObject());
+        StartCoroutine(playSound(1));
+        Destroy(this.gameObject);
     }
 
 
@@ -55,14 +57,12 @@ public class Player : PlayerController
         }
         Actions();
 
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            //performDie();
-            //CallShock();
-            //CheckForPush();
+        if (canBlast){
+            if (InputManager.Devices[pid].Action1.IsPressed) {
+                LaunchMissile();
+                canBlast = false;
+            }
         }
-
     }
 
     void Actions()
@@ -109,7 +109,7 @@ public class Player : PlayerController
 
     void SetRotation()
     {
-        if(InputManager.Devices.Count >0)
+        if(InputManager.Devices.Count > 0)
         {
             if (InputManager.Devices[pid].LeftStickX.Value < -0.2 ||
                 InputManager.Devices[pid].LeftStickX.Value > 0.2 ||
@@ -203,6 +203,17 @@ public class Player : PlayerController
         }
     }
 
+    public void SetCanBlast(bool canBlast, Blaster blaster) {
+        this.canBlast = canBlast;
+        this.blaster = blaster;
+    }
+
+    private void LaunchMissile() {
+        if (blaster != null) {
+            blaster.shoot();
+        }
+    }
+
     IEnumerator playSound(int audioClipIndex)
     {
         canPlayShock = false;
@@ -223,12 +234,4 @@ public class Player : PlayerController
             canPlayShock = true;
         }
     }
-
-    IEnumerator waitDestroyObject()
-    {
-        //need this so the audioclip can finish playing
-        yield return new WaitForSeconds(4.0f);
-        Destroy(this.gameObject);
-    }
-
 }
