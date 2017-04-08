@@ -89,15 +89,15 @@ public class PlayerController : MonoBehaviour {
 
     void onPanic()
     {
-        Vector3 horizontalOffset = transform.position - transform.right * panicRaycastDistance;
-        RaycastHit2D leftHit = Physics2D.Raycast(horizontalOffset, -transform.right, panicRaycastLenght);
+        Vector3 horizontalOffset = transform.position - Vector3.right * panicRaycastDistance;
+        RaycastHit2D leftHit = Physics2D.Raycast(horizontalOffset, -Vector2.right, panicRaycastLenght);
 
         if (leftHit.collider != null && (leftHit.transform.tag == "Wall" || leftHit.transform.tag == "Border"))
         {
             //Debug.DrawRay(horizontalOffset, -transform.right * panicRaycastLenght, Color.green);
 
-            horizontalOffset = transform.position + transform.right * panicRaycastDistance;
-            RaycastHit2D rightHit = Physics2D.Raycast(horizontalOffset, transform.right, panicRaycastLenght);
+            horizontalOffset = transform.position + Vector3.right * panicRaycastDistance;
+            RaycastHit2D rightHit = Physics2D.Raycast(horizontalOffset, Vector2.right, panicRaycastLenght);
 
             if (rightHit.collider != null && (rightHit.transform.tag == "Wall" || rightHit.transform.tag == "Border"))
             {
@@ -108,15 +108,15 @@ public class PlayerController : MonoBehaviour {
             }
         }
 
-        Vector3 verticalOffset = transform.position + transform.up * panicRaycastDistance;
-        RaycastHit2D upHit = Physics2D.Raycast(verticalOffset, transform.up, panicRaycastLenght);
+        Vector3 verticalOffset = transform.position + Vector3.up * panicRaycastDistance;
+        RaycastHit2D upHit = Physics2D.Raycast(verticalOffset, Vector2.up, panicRaycastLenght);
 
         if (upHit.collider != null && (upHit.transform.tag == "Wall" || upHit.transform.tag == "Border"))
         {
             //Debug.DrawRay(verticalOffset, transform.up * panicRaycastLenght, Color.green);
 
-            verticalOffset = transform.position - transform.up;
-            RaycastHit2D downHit = Physics2D.Raycast(verticalOffset, -transform.up, panicRaycastLenght);
+            verticalOffset = transform.position - Vector3.up;
+            RaycastHit2D downHit = Physics2D.Raycast(verticalOffset, -Vector2.up, panicRaycastLenght);
 
             if (downHit.collider != null && (downHit.transform.tag == "Wall" || downHit.transform.tag == "Border"))
             {
