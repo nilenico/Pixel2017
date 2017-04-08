@@ -35,7 +35,7 @@ public class Player : PlayerController
             }
         }
         startTime = Time.time;
-        this.OnDie += performDie;
+        this.OnDie += performDie;   
 
         startSpeed = speed;
 
@@ -230,5 +230,4 @@ public class Player : PlayerController
         yield return new WaitForSeconds(4.0f);
         Destroy(this.gameObject);
     }
-
 }

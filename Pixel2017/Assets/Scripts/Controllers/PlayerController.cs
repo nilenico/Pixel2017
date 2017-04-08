@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour {
 
     public delegate void RemovePlayer();
     public static event RemovePlayer OnRemovePlayer;
-
+    
     
 
     public void setPid(int pid) {
