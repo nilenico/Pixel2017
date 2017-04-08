@@ -8,6 +8,7 @@ public class Player : PlayerController
 {
     private Animator animator;
     private SpriteRenderer shockwaveSprite;
+    private SpriteRenderer panicSprite;
     private BoxCollider2D boxCollider;
     public AudioClip[] audioClips;
     private Blaster blaster;
@@ -20,6 +21,8 @@ public class Player : PlayerController
     private float shockedTime = 2.0f;
     private float startSpeed;
     bool canPlayShock = true;
+    bool canPlayPanicSound = true;
+    bool canFlashPanic = true;
     private bool canBlast;
 
 
@@ -37,17 +40,44 @@ public class Player : PlayerController
             }
         }
         startTime = Time.time;
-        this.OnDie += performDie;   
-
+        this.OnDie += performDie;
+        this.OnPanic += performPanic;
         startSpeed = speed;
 
     }
 
     void performDie() {
-        StartCoroutine(playSound(1));
         Destroy(this.gameObject);
     }
 
+    void performPanic()
+    {
+        StartCoroutine(playPanicSound());
+        StartCoroutine(Flash());
+        Debug.Log("panic!");
+    }
+
+    IEnumerator Flash()
+    {
+        if (canFlashPanic)
+        {
+            canFlashPanic = false;
+
+            panicSprite = GetComponent<SpriteRenderer>();
+
+            for (int i = 0; i < 10; i++)
+            {
+                panicSprite.color = new Color32(200, 200, 200, 255);
+                yield return new WaitForSeconds(0.1f);
+                panicSprite.color = new Color(255, 255, 255, 255);
+                yield return new WaitForSeconds(0.1f);
+            }
+            
+            canFlashPanic = true;
+        }
+        
+
+    }
 
     void Update()
     {
@@ -214,13 +244,16 @@ public class Player : PlayerController
         }
     }
 
-    IEnumerator playSound(int audioClipIndex)
+    IEnumerator playPanicSound()
     {
-        canPlayShock = false;
-        GetComponent<AudioSource>().clip = audioClips[audioClipIndex];
-        GetComponent<AudioSource>().Play();
-        yield return new WaitForSeconds(5.0f);
-        canPlayShock = true;
+        if (canPlayPanicSound)
+        {
+            canPlayPanicSound = false;
+            GetComponent<AudioSource>().clip = audioClips[1];
+            GetComponent<AudioSource>().Play();
+            yield return new WaitForSeconds(8.0f);
+            canPlayPanicSound = true;
+        }
     }
 
     IEnumerator playShockSound()
