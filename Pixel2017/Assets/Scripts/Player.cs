@@ -42,8 +42,8 @@ public class Player : PlayerController
     }
 
     void performDie() {
-        StartCoroutine(playSound(1)); //OhNoNo sound
-        StartCoroutine(waitDestroyObject());
+        StartCoroutine(playSound(1));
+        Destroy(this.gameObject);
     }
 
 
@@ -54,14 +54,6 @@ public class Player : PlayerController
             SetAnimators();
         }
         Actions();
-
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            //performDie();
-            //CallShock();
-            //CheckForPush();
-        }
 
     }
 
@@ -109,7 +101,7 @@ public class Player : PlayerController
 
     void SetRotation()
     {
-        if(InputManager.Devices.Count >0)
+        if(InputManager.Devices.Count > 0)
         {
             if (InputManager.Devices[pid].LeftStickX.Value < -0.2 ||
                 InputManager.Devices[pid].LeftStickX.Value > 0.2 ||
@@ -222,12 +214,5 @@ public class Player : PlayerController
             yield return new WaitForSeconds(5.0f);
             canPlayShock = true;
         }
-    }
-
-    IEnumerator waitDestroyObject()
-    {
-        //need this so the audioclip can finish playing
-        yield return new WaitForSeconds(4.0f);
-        Destroy(this.gameObject);
     }
 }

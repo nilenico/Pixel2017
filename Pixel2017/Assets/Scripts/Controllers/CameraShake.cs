@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraShake : MonoBehaviour {
 
-    public Transform camTransform;
+    private Transform camTransform;
 
     // How long the object should shake for.
     float shakeDuration;

@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour {
     private Vector3 velocity;
     bool gameStarted = false;
 
+    private const float raycastLength = 0.03f;
+    private const float raycastDistance = 1.8f;
+
     protected delegate void Die();
     protected event Die OnDie;
 
@@ -35,21 +38,19 @@ public class PlayerController : MonoBehaviour {
 
         if (InputManager.Devices.Count > 0 && gameStarted)
         {
-            velocity = Vector3.zero;
-            velocity.x += InputManager.Devices[pid].LeftStickX.Value * speed;
-            velocity.y += InputManager.Devices[pid].LeftStickY.Value * speed;
-            transform.position += velocity * speed * Time.deltaTime;
+            Vector3 offset = transform.position + transform.up * raycastDistance;
+            RaycastHit2D upHit = Physics2D.Raycast(offset, transform.up, raycastLength);
+            Debug.DrawRay(offset, transform.up);
+            offset = transform.position - transform.right * raycastDistance;
+            RaycastHit2D leftHit = Physics2D.Raycast(offset, -transform.right, raycastLength);
 
-            Vector3 offset = transform.position + transform.up * 1.8f;
-
-            RaycastHit2D upHit = Physics2D.Raycast(offset, transform.up, 0.03f);
-            offset = transform.position - transform.right * 1.8f;
-            RaycastHit2D leftHit = Physics2D.Raycast(offset, -transform.right, 0.03f);
+            Debug.DrawRay(offset, -transform.right);
 
             if (leftHit.collider != null && (leftHit.transform.tag == "Wall" || leftHit.transform.tag == "Border"))
             {
-                offset = transform.position + transform.right * 1.8f;
-                RaycastHit2D rightHit = Physics2D.Raycast(offset, transform.right, 0.03f);
+                offset = transform.position + transform.right * raycastDistance;
+                RaycastHit2D rightHit = Physics2D.Raycast(offset, transform.right, raycastLength);
+                Debug.DrawRay(offset, transform.right);
                 if (rightHit.collider != null && (rightHit.transform.tag == "Wall" || rightHit.transform.tag == "Border"))
                 {
                     if (OnDie != null)
@@ -61,8 +62,9 @@ public class PlayerController : MonoBehaviour {
 
             if (upHit.collider != null && (upHit.transform.tag == "Wall" || upHit.transform.tag == "Border"))   
             {
-                offset = transform.position - transform.up * 0.5f;
-                RaycastHit2D downHit = Physics2D.Raycast(offset, -transform.up, 0.03f);
+                offset = transform.position - transform.up ;
+                RaycastHit2D downHit = Physics2D.Raycast(offset, -transform.up, raycastLength);
+                Debug.DrawRay(offset, -transform.up);
                 if (downHit.collider != null && (downHit.transform.tag == "Wall" || downHit.transform.tag == "Border")) {
                     if (OnDie != null)
                         OnDie();
@@ -71,6 +73,10 @@ public class PlayerController : MonoBehaviour {
 
                 }
             }
+            velocity = Vector3.zero;
+            velocity.x += InputManager.Devices[pid].LeftStickX.Value * speed;
+            velocity.y += InputManager.Devices[pid].LeftStickY.Value * speed;
+            transform.position += velocity * speed * Time.deltaTime;
         }
     }
 }
