@@ -34,5 +34,6 @@ public class PlayersHandler : MonoBehaviour {
         lblWin.enabled = true;
         btn.gameObject.active = true;
         timer.GetComponent<Timer>().Stop();
+        Destroy(GameObject.FindGameObjectWithTag("Spawner") as GameObject);
     }
 }

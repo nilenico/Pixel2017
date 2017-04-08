@@ -55,7 +55,6 @@ public class Player : PlayerController
 
     void performDie() {
         Destroy(this.gameObject);
-        Destroy(GameObject.FindGameObjectWithTag("Spawner") as GameObject);
     }
 
     void performPanic()
