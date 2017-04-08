@@ -62,8 +62,10 @@ public class BlasterAmmo : MonoBehaviour {
 
     private void checkIfMoving(Vector3 currentPos) {
         if (lastPos != null){
-            if (lastPos == currentPos){
+            if (lastPos == currentPos || transform.position.x < -30 || transform.position.x > 30 || transform.position.y > 15 || transform.position.y < -15)
+            {
                 Destroy(this.gameObject);
+                Destroy(GameObject.FindGameObjectWithTag("Target"));
             }
             else { lastPos = currentPos; }
         }
