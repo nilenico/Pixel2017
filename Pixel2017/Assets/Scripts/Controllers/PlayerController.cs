@@ -17,13 +17,10 @@ public class PlayerController : MonoBehaviour {
     public delegate void RemovePlayer();
     public static event RemovePlayer OnRemovePlayer;
 
+    
 
     public void setPid(int pid) {
         this.pid = pid;
-    }
-     void Start()
-    {
-        StartCoroutine(waitForStart());
     }
 
     IEnumerator waitForStart()
@@ -33,7 +30,10 @@ public class PlayerController : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        if(InputManager.Devices.Count > 0 && gameStarted)
+        if(!gameStarted)
+            StartCoroutine(waitForStart());
+
+        if (InputManager.Devices.Count > 0 && gameStarted)
         {
             velocity = Vector3.zero;
             velocity.x += InputManager.Devices[pid].LeftStickX.Value * speed;

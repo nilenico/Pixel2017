@@ -14,6 +14,7 @@ public class Player : PlayerController
     private bool animationIsSet = false;
     public bool gotShocked = false;
     public bool isShocked = false;
+    public bool gotBoost = false;
     private float startTime;
     private float shockedTime = 2.0f;
     private float startSpeed;
@@ -37,9 +38,9 @@ public class Player : PlayerController
         this.OnDie += performDie;
 
         startSpeed = speed;
-       
+
     }
-        
+
     void performDie() {
         StartCoroutine(playSound(1)); //OhNoNo sound
         StartCoroutine(waitDestroyObject());
@@ -70,6 +71,20 @@ public class Player : PlayerController
         {
             SetRotation();
             CheckForPush();
+            if (gotBoost)
+            {
+                SetBoostAnim();
+            }
+            else
+            {
+                foreach (Transform child in transform)
+                {
+                    foreach (AnimationsTestScript boosterAnim in child.GetComponentsInChildren<AnimationsTestScript>())
+                    {
+                        boosterAnim.isBoosting = false;
+                    }
+                }
+            }
         }
         else
         {
@@ -173,6 +188,17 @@ public class Player : PlayerController
             foreach (AnimationsTestScript boosterAnim in child.GetComponentsInChildren<AnimationsTestScript>())
             {
                 ShockingFunction(boosterAnim);
+            }
+        }
+    }
+
+    void SetBoostAnim()
+    {
+        foreach (Transform child in transform)
+        {
+            foreach (AnimationsTestScript boosterAnim in child.GetComponentsInChildren<AnimationsTestScript>())
+            {
+                boosterAnim.isBoosting = true;
             }
         }
     }
