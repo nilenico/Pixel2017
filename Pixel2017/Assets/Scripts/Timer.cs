@@ -22,8 +22,12 @@ public class Timer : MonoBehaviour {
             if(startTime < Time.time + speed) {
                 //Reduce 
                 level.transform.localScale -= shrinkspeed * speed * Time.deltaTime;
-                Wall1.transform.localScale -= new Vector3(0, 2.45f * speed * Time.deltaTime, 0);
-                Wall2.transform.localScale -= new Vector3(0, 2.45f * speed * Time.deltaTime, 0);
+                if(Wall1 != null) {
+                    Wall1.transform.localScale -=  new Vector3(0, 2.45f * speed * Time.deltaTime, 0);
+                }
+                if (Wall2 != null) {
+                    Wall2.transform.localScale -= new Vector3(0, 2.45f * speed * Time.deltaTime, 0);
+                }
                 startTime = Time.time;            
             }
         }

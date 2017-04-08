@@ -44,8 +44,6 @@ public class PlayerController : MonoBehaviour {
             offset = transform.position - transform.right * raycastDistance;
             RaycastHit2D leftHit = Physics2D.Raycast(offset, -transform.right, raycastLength);
 
-            Debug.DrawRay(offset, -transform.right);
-
             if (leftHit.collider != null && (leftHit.transform.tag == "Wall" || leftHit.transform.tag == "Border"))
             {
                 offset = transform.position + transform.right * raycastDistance;

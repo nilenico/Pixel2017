@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class enemyAsteroidRotation : MonoBehaviour {
 
-    private float rotateSpeed = 100.0f;
+    public float rotateSpeed = 100.0f;
     // Use this for initialization
     void Start () {
 		
@@ -12,12 +12,7 @@ public class enemyAsteroidRotation : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        onRotate();
-
-    }
-
-    void onRotate()
-    {
         transform.Rotate(0, 0, Time.deltaTime * rotateSpeed);
+
     }
 }
