@@ -54,7 +54,8 @@ public class Player : PlayerController
     }
 
     void performDie() {
-        Destroy(this.gameObject);
+        animator.SetBool("death", true);
+        Destroy(this.gameObject, 0.7f);
     }
 
     void performPanic()
@@ -119,7 +120,6 @@ public class Player : PlayerController
                 canBlast = false;
                 LaunchMissile(currentTarget.transform);
             }
-
         }
     }
 
