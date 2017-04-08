@@ -6,7 +6,7 @@ public class enemyAsteroid : MonoBehaviour {
 
     public float movementSpeed = 55.0f;
     //private float rotateSpeed = 100.0f;
-    private float lifeTime = 20.0f;
+    private float lifeTime = 10.0f;
     private float distanceToCenter;
     private bool hasPlayed = false;
 

@@ -44,7 +44,7 @@ public class Satellite : MonoBehaviour {
 
     private void move() {
         pos += normalizedDirection * MoveSpeed * Time.deltaTime;
-        axis = new Vector3(-normalizedDirection.x, normalizedDirection.y);
+        axis = new Vector3(-normalizedDirection.x, -normalizedDirection.y);
         transform.position = pos + axis * Mathf.Sin(Time.time * frequency) * magnitude;
     }
 
