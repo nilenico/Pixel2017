@@ -77,7 +77,7 @@ public class BlasterAmmo : MonoBehaviour {
 
     private void stun()
     {
-        if (freezePlayer)
+        if (freezePlayer && playerHit != null)
         {
             if (freezeTimeout > 0)
             {

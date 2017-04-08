@@ -12,7 +12,7 @@ public class Blaster : MonoBehaviour {
     private int ran;
     private float laserTimeout;
     private float timeout = 0;
-    private bool ballIsShoot;
+    private bool ballIsShoot = false;
 
     // Use this for initialization
     void Start() {
@@ -42,7 +42,7 @@ public class Blaster : MonoBehaviour {
 
     void shoot(Transform trs)
     {
-        if (blasterAmmo != null)
+        if (blasterAmmo != null && !ballIsShoot)
         {
             blasterAmmo.GetComponent<BlasterAmmo>().setTransform(trs);
             Instantiate(blasterAmmo, player.transform.position, Quaternion.identity);
