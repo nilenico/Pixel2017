@@ -18,5 +18,19 @@ public class MovableProps : MonoBehaviour {
         if(rotate)
             transform.Rotate(0, 0, Time.deltaTime * speed * 50);
         transform.position += velocity * speed * Time.deltaTime;
+        OnDeath();
 	}
+
+    void OnDeath()
+    {
+        if (transform.position.x > 30.0f || transform.position.x < -30.0f)
+        {
+            Destroy(this.gameObject);
+        }
+
+        if (transform.position.y > 30.0f || transform.position.y < -30.0f)
+        {
+            Destroy(this.gameObject);
+        }
+    }
 }

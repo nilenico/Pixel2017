@@ -8,7 +8,7 @@ public class enemyAsteroidFlame : MonoBehaviour
     public float movementSpeed = 55.0f;
     public float distanceToPlaySound = 35.0f;
     private float rotateSpeed = 1000.0f; //dont touch else it wont rotate fast enough at start
-    private float lifeTime = 20.0f;
+    private float lifeTime = 15.0f;
     private float distanceToCenter;
     private bool hasPlayed = false;
 
