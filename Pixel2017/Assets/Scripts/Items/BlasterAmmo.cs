@@ -10,11 +10,14 @@ public class BlasterAmmo : MonoBehaviour {
     public Transform trs;
     Vector3 direction;
     Vector3 origin;
+    private float timeout;
 
 
 	// Use this for initialization
 	void Start () {
         origin = transform.position;
+        timeout = 10;
+        GetComponent<CircleCollider2D>().enabled = false;
     }
 	
 	// Update is called once per frame
@@ -23,7 +26,13 @@ public class BlasterAmmo : MonoBehaviour {
             velocity = Vector3.zero;
             velocity += trs.position - origin;
             transform.position += velocity * speed*Time.deltaTime;
+
+    }
+        if (timeout <= 0)
+        {
+            GetComponent<CircleCollider2D>().enabled = true;
         }
+        else { timeout--; }
     }
 
     void OnTriggerEnter2D(Collider2D coll) {
@@ -35,6 +44,8 @@ public class BlasterAmmo : MonoBehaviour {
             Destroy(coll.gameObject);
             Destroy(this.gameObject);
         }
+        Debug.Log("coll "+coll.gameObject.name);
+        Debug.Log("trs " + trs.gameObject.name);
     }
 
     public void setTransform(Transform trs) {

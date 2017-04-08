@@ -10,6 +10,9 @@ public class Blaster : MonoBehaviour {
     public GameObject blasterAmmo;
     private bool targetIsSpawn;
     private int ran;
+    private float laserTimeout;
+    private float timeout = 0;
+    private bool ballIsShoot;
 
     // Use this for initialization
     void Start() {
@@ -17,15 +20,7 @@ public class Blaster : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
-        if (player != null)
-        {
-            /*Physics2D.Raycast(player.transform.position, player.transform.up, 10);
-            Vector3 forward = player.transform.TransformDirection(Vector3.up) * 50;
-            Debug.DrawRay(player.transform.position, forward, rayColor);*/
-            //Debug.Log("Shooting");
-        }
-    }
+    void Update() {}
 
     void OnTriggerEnter2D(Collider2D coll) {
         if (coll.tag.Equals("Player"))
@@ -52,6 +47,7 @@ public class Blaster : MonoBehaviour {
             blasterAmmo.GetComponent<BlasterAmmo>().setTransform(trs);
             Instantiate(blasterAmmo, player.transform.position, Quaternion.identity);
             player.GetComponent<Player>().SetCanBlast(false);
+            ballIsShoot = true;
         }
      
     }
