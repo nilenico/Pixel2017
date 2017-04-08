@@ -27,19 +27,6 @@ public class AnimationsTestScript : MonoBehaviour
     {
         CheckBoost();
         CheckElectro();
-
-
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            animator.SetBool("isBoosting", true);
-        }
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            animator.SetBool("isBoosting", false);
-        }
-
     }
 
 
