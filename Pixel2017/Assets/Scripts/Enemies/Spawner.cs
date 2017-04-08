@@ -9,7 +9,7 @@ public class Spawner : MonoBehaviour {
 
     private float enemySpawnWait;
     private float enemySpawnMostWait = 60.0f; //10.0f
-    private float enemySpawnLeastWait = 15.0f; // 8.0f
+    private float enemySpawnLeastWait = 15.0f; // 8.0
 
     private float powerUpSpawnWait;
     private float powerUpSpawnMostWait = 20.0f;
