@@ -6,7 +6,7 @@ public class WallController : MonoBehaviour {
     public bool isHorizontal;
     private bool isDestroyed;
 
-    private float killTime = 0.5f;
+    private float killTime = 0.4f;
     private float startTime;
 
     void Start()
