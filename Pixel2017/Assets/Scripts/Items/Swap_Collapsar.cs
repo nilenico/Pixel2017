@@ -12,7 +12,7 @@ public class Swap_Collapsar : Item
     private Transform startFrom;
     private GameObject otherPlayerToSwap;
     private Player attracked_player;
-    private Player[] players = new Player[4];
+    private List<Player> players = new List<Player>();
 
     // Use this for initialization
     void Start()
@@ -20,7 +20,7 @@ public class Swap_Collapsar : Item
         Destroy(this.gameObject, timeout);
         GameObject[] players_gameObject = GameObject.FindGameObjectsWithTag("Player");
         for (int i = 0; i < players_gameObject.Length; ++i){
-            players[i] = players_gameObject[i].GetComponent<Player>();
+            players.Add(players_gameObject[i].GetComponent<Player>());
         }
     }
 
@@ -41,7 +41,7 @@ public class Swap_Collapsar : Item
             attractObj.transform.position = Vector3.MoveTowards(attractObj.transform.position, transform.position, speed * Time.deltaTime);
         }
         else if ((attractObj != null && Vector3.Distance(transform.position, attractObj.transform.position) <= distance)){
-            for (int i = 0; i < players.Length; ++i){
+            for (int i = 0; i < players.Count; ++i){
                 if (players[i] != null && players[i].gameObject.name != attractObj.gameObject.name){
                     startFrom = transform;
                     otherPlayerToSwap = players[i].gameObject;
