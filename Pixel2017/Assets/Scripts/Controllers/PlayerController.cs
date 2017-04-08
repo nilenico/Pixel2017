@@ -92,7 +92,6 @@ public class PlayerController : MonoBehaviour {
 
         if (leftHit.collider != null && (leftHit.transform.tag == "Wall" || leftHit.transform.tag == "Border"))
         {
-            //Debug.DrawRay(horizontalOffset, -transform.right * panicRaycastLenght, Color.green);
 
             horizontalOffset = transform.position + Vector3.right * panicRaycastDistance;
             RaycastHit2D rightHit = Physics2D.Raycast(horizontalOffset, Vector2.right, panicRaycastLenght);

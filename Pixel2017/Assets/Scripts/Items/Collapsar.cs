@@ -6,7 +6,7 @@ public class Collapsar : Item {
 
     public GameObject radius;
     private CircleCollider2D radius_coll;
-    private GameObject attractObj;
+    private List<GameObject> attractObj = new List<GameObject>();
     public int speed;
     public float distance;
     public bool swap_state;
@@ -17,26 +17,39 @@ public class Collapsar : Item {
     void Start () {
         timeout = initial_timeout;
     }
-	
-	// Update is called once per frame
-	void Update () {
-        if (attractObj != null && (Vector3.Distance(transform.position, attractObj.transform.position) > distance)){
-            attractObj.transform.position = Vector3.MoveTowards(attractObj.transform.position, transform.position, speed * Time.deltaTime);
-        }
-        else if ((attractObj != null && Vector3.Distance(transform.position, attractObj.transform.position) <= distance) && swap_state) {
-            if (target != null){
-                attractObj.transform.position = target.position;
+
+    // Update is called once per frame
+    void Update()
+    {
+        for (int i = 0; i < attractObj.Count; ++i)
+        {
+            if (attractObj != null)
+            {
+                {
+                    if (attractObj != null && (Vector3.Distance(transform.position, attractObj[i].transform.position) > distance))
+                    {
+                        attractObj[i].transform.position = Vector3.MoveTowards(attractObj[i].transform.position, transform.position, speed * Time.deltaTime);
+                    }
+                    else if ((attractObj != null && Vector3.Distance(transform.position, attractObj[i].transform.position) <= distance) && swap_state)
+                    {
+                        if (target != null)
+                        {
+                            attractObj[i].transform.position = target.position;
+                        }
+                    }
+
+                    if (timeout > 0) { timeout--; }
+                    else { Destroy(this.gameObject); }
+
+                }
+
             }
         }
-
-        if (timeout >0) { timeout--; }
-        else { Destroy(this.gameObject); }
-        
-	}
+    }
 
     private void OnTriggerEnter2D(Collider2D coll) {
         if (coll.tag.Equals("Player")){
-            attractObj = coll.gameObject;
+            attractObj.Add(coll.gameObject);
         }
     }
 }

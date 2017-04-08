@@ -12,8 +12,8 @@ public class Spawner : MonoBehaviour {
     private float enemySpawnLeastWait = 8.0f; // 8.0
 
     private float powerUpSpawnWait;
-    private float powerUpSpawnMostWait = 20.0f;
-    private float powerUpSpawnLeastWait = 5.0f;
+    private float powerUpSpawnMostWait = 12.0f;
+    private float powerUpSpawnLeastWait = 4.0f;
 
     private int startWait = 5;
     public bool enemiesStop;
@@ -72,7 +72,7 @@ public class Spawner : MonoBehaviour {
 
         while (!powerUpsStop)
         {
-            powerUpSpawnPosition = Random.insideUnitCircle * powerUpInnerRadius;
+            powerUpSpawnPosition = Random.insideUnitCircle * 5;
             Instantiate(powerUps, powerUpSpawnPosition, transform.rotation);
 
             yield return new WaitForSeconds(powerUpSpawnWait);

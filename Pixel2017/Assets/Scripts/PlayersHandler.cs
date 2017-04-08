@@ -7,7 +7,7 @@ public class PlayersHandler : MonoBehaviour {
     private int count;
     public GameObject timer;
     public Image lblWin;
-
+    public Button btn;
     void Start () {
         lblWin.enabled = false;
         PlayerController.OnRemovePlayer += removePlayer;
@@ -32,6 +32,8 @@ public class PlayersHandler : MonoBehaviour {
     }
     void win() {
         lblWin.enabled = true;
+        btn.gameObject.active = true;
         timer.GetComponent<Timer>().Stop();
+        Destroy(GameObject.FindGameObjectWithTag("Spawner") as GameObject);
     }
 }
