@@ -25,13 +25,14 @@ public class Spawner : MonoBehaviour {
     private Vector2 enemySpawnPosition;
     private Vector2 powerUpSpawnPosition;
     private int enemyOuterRadius = 50;
-    private int powerUpInnerRadius = 15;
+    private float powerUpInnerRadius = 15;
 
+    private float timerSpeed;
     float spawnAngle;
 
     // Use this for initialization
     void Start () {
-        
+        timerSpeed = GameObject.FindGameObjectWithTag("Timer").GetComponent<Timer>().GetSpeed();
 
         StartCoroutine(waitEnemySpawner());
         StartCoroutine(waitPowerUpSpawner());
@@ -39,11 +40,11 @@ public class Spawner : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        powerUpInnerRadius -= 0.06f * Time.deltaTime;
         enemySpawnWait = Random.Range(enemySpawnLeastWait, enemySpawnMostWait);
         powerUpSpawnWait = Random.Range(powerUpSpawnLeastWait, powerUpSpawnMostWait);
-
         spawnAngle = Random.Range(0, 360);
-
+        Debug.Log(powerUpInnerRadius);
     }
 
     IEnumerator waitEnemySpawner()

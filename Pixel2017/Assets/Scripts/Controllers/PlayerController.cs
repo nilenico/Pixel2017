@@ -1,14 +1,12 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using InControl;
-using System;
 
 public class PlayerController : MonoBehaviour {
     protected int pid = 0;
     public float speed = 10;
     private Vector3 velocity;
-    bool gameStarted = true;
+    bool gameStarted = false;
 
     private const float raycastLength = 0.03f;
     private const float raycastDistance = 1.8f;
@@ -94,7 +92,6 @@ public class PlayerController : MonoBehaviour {
 
         if (leftHit.collider != null && (leftHit.transform.tag == "Wall" || leftHit.transform.tag == "Border"))
         {
-            //Debug.DrawRay(horizontalOffset, -transform.right * panicRaycastLenght, Color.green);
 
             horizontalOffset = transform.position + Vector3.right * panicRaycastDistance;
             RaycastHit2D rightHit = Physics2D.Raycast(horizontalOffset, Vector2.right, panicRaycastLenght);

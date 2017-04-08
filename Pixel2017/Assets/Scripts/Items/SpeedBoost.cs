@@ -20,7 +20,7 @@ public class SpeedBoost : Item {
             if (timeout <= 0)
             {
                 speedyObj.GetComponent<Player>().speed /= 1.5f;
-                //speedyObj.GetComponent<Player>().gotBoost = false;
+                speedyObj.GetComponent<Player>().gotBoost = false;
                 speedyObj = null;
                 timeout = boost_initial_timeout;
                 Destroy(this.gameObject);
@@ -32,7 +32,7 @@ public class SpeedBoost : Item {
     private void OnTriggerEnter2D(Collider2D coll) {
         if (coll.gameObject.tag.Equals("Player")) {
             coll.gameObject.GetComponent<Player>().speed *= 1.5f;
-            //coll.gameObject.GetComponent<Player>().gotBoost = true;
+            coll.gameObject.GetComponent<Player>().gotBoost = true;
             speedyObj = coll.gameObject;
             transform.position = new Vector3(0, 3000, 0);
         }
