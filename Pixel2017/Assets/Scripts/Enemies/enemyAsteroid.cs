@@ -26,7 +26,7 @@ public class enemyAsteroid : MonoBehaviour {
 	void Update () {
         onMove();
         //onRotate();
-        playEnterSound();
+        //playEnterSound();
 
     }
 
