@@ -19,4 +19,6 @@ public class MovableProps : MonoBehaviour {
             transform.Rotate(0, 0, Time.deltaTime * speed * 50);
         transform.position += velocity * speed * Time.deltaTime;
 	}
+
+    
 }
