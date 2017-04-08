@@ -8,14 +8,16 @@ public class Blaster : MonoBehaviour {
     private Ray ray;
     private Color rayColor = Color.green; //blue by default, update with the getPid
     public GameObject blasterAmmo;
+    private bool targetIsSpawn;
+    private int ran;
 
     // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    void Start() {
+        Player.OnBlast += shoot;
+    }
+
+    // Update is called once per frame
+    void Update() {
         if (player != null)
         {
             /*Physics2D.Raycast(player.transform.position, player.transform.up, 10);
@@ -26,19 +28,31 @@ public class Blaster : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D coll) {
-        Debug.Log("Blasters hits");
-        startFire(coll.gameObject);
-        transform.position = new Vector3(0, 3000, 0);
+        if (coll.tag.Equals("Player"))
+        {
+            if (!targetIsSpawn)
+            {
+                startFire(coll.gameObject);
+                targetIsSpawn = true;
+                transform.position = new Vector3(0, 3000, 0);
+            }
+        }
     }
 
     private void startFire(GameObject player) {
         //player.GetComponent<Player>().getPid() get the color to set the beams color
-        player.GetComponent<Player>().SetCanBlast(true, this);
+        player.GetComponent<Player>().SetCanBlast(true);
         this.player = player;
-
     }
 
-    public void shoot() {
-        Instantiate(blasterAmmo, player.transform.position, player.transform.rotation);
+    void shoot(Transform trs)
+    {
+        if (blasterAmmo != null)
+        {
+            blasterAmmo.GetComponent<BlasterAmmo>().setTransform(trs);
+            Instantiate(blasterAmmo, player.transform.position, Quaternion.identity);
+            player.GetComponent<Player>().SetCanBlast(false);
+        }
+     
     }
 }

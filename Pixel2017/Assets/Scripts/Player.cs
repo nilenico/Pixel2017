@@ -11,6 +11,8 @@ public class Player : PlayerController
     private BoxCollider2D boxCollider;
     public AudioClip[] audioClips;
     private Blaster blaster;
+    public GameObject target;
+    private GameObject currentTarget;
 
     private bool animationIsSet = false;
     public bool gotShocked = false;
@@ -20,11 +22,17 @@ public class Player : PlayerController
     private float shockedTime = 2.0f;
     private float startSpeed;
     bool canPlayShock = true;
-    private bool canBlast;
+    public bool canBlast;
+    private Vector3 originPos;
+    private Vector3 targetVelocity;
+
+    public delegate void Blast(Transform trs);
+    public static event Blast OnBlast;
 
 
     void Start()
     {
+        originPos = transform.position;
         AudioSource audio = GetComponent<AudioSource>();
 
         boxCollider = GetComponent<BoxCollider2D>();
@@ -40,7 +48,6 @@ public class Player : PlayerController
         this.OnDie += performDie;   
 
         startSpeed = speed;
-
     }
 
     void performDie() {
@@ -65,13 +72,19 @@ public class Player : PlayerController
             //CheckForPush();
         }
 
-        if (canBlast){
-            if (InputManager.Devices[pid].Action1.IsPressed) {
-                LaunchMissile();
-                canBlast = false;
+        if (canBlast && currentTarget != null){
+            targetVelocity = Vector3.zero;
+            targetVelocity.y += InputManager.Devices[pid].RightStickY.Value * 5;
+            targetVelocity.x += InputManager.Devices[pid].RightStickX.Value * 5;
+            currentTarget.transform.position += targetVelocity * 5 * Time.deltaTime;
+            if (InputManager.Devices[pid].RightTrigger.Value>=0.5){
+                LaunchMissile(currentTarget.transform);
             }
+
         }
     }
+
+    public Vector3 GetOriginPos() { return originPos; }
 
     void Actions()
     {
@@ -211,14 +224,17 @@ public class Player : PlayerController
         }
     }
 
-    public void SetCanBlast(bool canBlast, Blaster blaster) {
+    public void SetCanBlast(bool canBlast) {
         this.canBlast = canBlast;
-        this.blaster = blaster;
+        if (canBlast){
+            currentTarget = Instantiate(target, transform.position, Quaternion.identity);
+        }
     }
 
-    private void LaunchMissile() {
-        if (blaster != null) {
-            blaster.shoot();
+    private void LaunchMissile(Transform trs) {
+        if (OnBlast != null){
+            OnBlast(trs);
+            currentTarget = null;
         }
     }
 
