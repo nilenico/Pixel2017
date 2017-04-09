@@ -99,22 +99,6 @@ public class Player : PlayerController
             targetVelocity.y += InputManager.Devices[pid].RightStickY.Value * 5;
             targetVelocity.x += InputManager.Devices[pid].RightStickX.Value * 5;
             currentTarget.transform.position += targetVelocity * 5 * Time.deltaTime;
-            SpriteRenderer targetSprite = currentTarget.GetComponent<SpriteRenderer>();
-            switch (pid)
-            {
-                case 0:
-                    targetSprite.color = new Color32(10, 119, 255, 255);
-                    break;
-                case 1:
-                    targetSprite.color = new Color32(255, 184, 10, 255);
-                    break;
-                case 2:
-                    targetSprite.color = new Color32(206, 41, 223, 255);
-                    break;
-                case 3:
-                    targetSprite.color = new Color32(57, 203, 193, 255);
-                    break;
-            }
             if (InputManager.Devices[pid].Action1.WasPressed)
             {
                 canBlast = false;

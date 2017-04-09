@@ -59,9 +59,11 @@ public class PlayerController : MonoBehaviour {
                 if (rightHit.collider != null && (rightHit.transform.tag == "Wall" || rightHit.transform.tag == "Border"))
                 {
                     if (OnDie != null)
+                    {
                         OnDie();
-                    if (OnRemovePlayer != null)
-                        OnRemovePlayer();
+                        if (OnRemovePlayer != null)
+                            OnRemovePlayer();
+                    }
                 }
             }
 
@@ -70,11 +72,14 @@ public class PlayerController : MonoBehaviour {
                 offset = transform.position - transform.up ;
                 RaycastHit2D downHit = Physics2D.Raycast(offset, -transform.up, raycastLength);
                 //Debug.DrawRay(offset, -transform.up);
-                if (downHit.collider != null && (downHit.transform.tag == "Wall" || downHit.transform.tag == "Border")) {
+                if (downHit.collider != null && (downHit.transform.tag == "Wall" || downHit.transform.tag == "Border"))
+                {
                     if (OnDie != null)
+                    {
                         OnDie();
-                    if (OnRemovePlayer != null)
-                        OnRemovePlayer();
+                        if (OnRemovePlayer != null)
+                            OnRemovePlayer();
+                    }
 
                 }
             }

@@ -27,7 +27,7 @@ public class PlayersHandler : MonoBehaviour {
 
     void Update() {
         if(count <= 1 ){
-            win();
+            //win();
         }
     }
     void win() {
